@@ -1,40 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lemin.h                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlintill <rlintill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/07 12:45:23 by rlintill          #+#    #+#             */
-/*   Updated: 2020/10/07 13:37:24 by rlintill         ###   ########.fr       */
+/*   Created: 2016/11/22 10:40:45 by rlintill          #+#    #+#             */
+/*   Updated: 2016/11/22 10:47:41 by rlintill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEMIN_H
-# define LEMIN_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include "libft.h"
-
-typedef struct		s_room
+char	*ft_strdup(const char *s1)
 {
-	char			*name;
-	struct s_room	*next;
-}					t_room;
+	char	*s2;
 
-typedef struct 		s_graph
-{
-	t_room			*room;
-	struct s_graph	*next;
-}					t_graph;
-
-typedef struct	s_lemin
-{
-	unsigned	ants;
-	unsigned	rooms;
-	t_room		*start;
-	t_room		*end;
-	t_graph		*graph;
-}				t_lemin;
-
-#endif
+	if (!(s2 = ft_strnew(ft_strlen(s1))))
+		return (NULL);
+	ft_strcpy(s2, s1);
+	return (s2);
+}
