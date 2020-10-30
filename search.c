@@ -1,49 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lemin.c                                            :+:      :+:    :+:   */
+/*   search.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlintill <rlintill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/07 12:45:23 by rlintill          #+#    #+#             */
-/*   Updated: 2020/10/07 13:37:24 by rlintill         ###   ########.fr       */
+/*   Created: 2020/10/30 12:45:23 by rlintill          #+#    #+#             */
+/*   Updated: 2020/10/30 13:37:24 by rlintill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
-#include <stdio.h>
 
 /*
- * Needed for the debug. Delete later.
+ * We search the graph whether there was a room with the same coordinates.
  */
 
-void print_graph(t_edge *graph)
+int search_coord(t_lemin *lem, int x, int y)
 {
 	t_edge	*p;
 	t_room	*r;
 
-	p = graph;
+	p = lem->graph;
 	r = NULL;
 	while (p)
 	{
 		r = p->room;
-		while (r)
-		{
-			printf("%s -> ",r->name);
-			r = r->next;
-		}
-		printf("NULL\n");
+		if (r->x == x && r->y == y)
+			return (1);
 		p = p->next;
 	}
-	printf("\n");
+	return (0);
 }
 
-int	main(int argc, char **argv)
-{
-	t_lemin	*lem;
+/*
+ * We search the graph whether there was a room with the same name.
+ */
 
-	lem = parse_lem();
-	print_graph(lem->graph);
-	
+int search_name(t_lemin *lem, char *room_name)
+{
+	t_edge	*p;
+	t_room	*r;
+
+	p = lem->graph;
+	r = NULL;
+	while (p)
+	{
+		r = p->room;
+		if (!ft_strcmp(room_name, r->name))
+				return (1);
+		p = p->next;
+	}
 	return (0);
 }
