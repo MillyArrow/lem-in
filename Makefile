@@ -6,14 +6,15 @@
 #    By: marrow <marrow@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/12 18:25:26 by marrow            #+#    #+#              #
-#    Updated: 2020/10/31 07:56:05 by marrow           ###   ########.fr        #
+#    Updated: 2020/10/31 08:26:09 by marrow           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem-in
 
 CC = gcc
-FLAGS =-Wall -Wextra -Werror -O3
+FLAGS =
+#-Wall -Wextra -Werror -O3
 LIBRARIES = -lft -L $(LIBFT_DIRECTORY)
 INCLUDES = -I $(HEADERS_DIRECTORY) -I $(LIBFT_HEADERS)
 
@@ -21,19 +22,21 @@ LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./libft/
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
 
-HEADERS_LIST = filler.h
+HEADERS_LIST = lemin.h \
+	queue.h
 HEADERS_DIRECTORY = ./includes/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = ./sources/
-SOURCES_LIST = edge.c \
-	error.c \
+SOURCES_LIST = checking_edges.c \
+	checking_rooms.c \
+	edge.c \
+ 	error.c \
 	free.c \
 	init_lem.c \
 	lemin.c \
 	parse.c \
 	queue.c \
-	queue.h \
 	room.c \
 	search.c \
 	utils.c \

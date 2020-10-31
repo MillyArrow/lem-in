@@ -14,9 +14,9 @@
 # define LEMIN_H
 
 # include <stdlib.h>
+# include "ft_printf.h"
 # include "libft.h"
 # include "queue.h"
-# include "get_next_line.h"
 
 // Compile with:
 // gcc lemin.c parse.c room.c edge.c init_lem.c checking_edges.c checking_rooms.c free.c search.c error.c utils.c libft/libft.a -I libft/includes -I .
