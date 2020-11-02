@@ -14,10 +14,10 @@
 #include <stdio.h>
 
 /*
- * Needed for the debug. Delete later.
- */
+** Needed for the debug. Delete later.
+*/
 
-void print_graph(t_edge *graph)
+void	print_graph(t_edge *graph)
 {
 	t_edge	*p;
 	t_room	*r;
@@ -29,7 +29,7 @@ void print_graph(t_edge *graph)
 		r = p->room;
 		while (r)
 		{
-			printf("%s -> ",r->name);
+			printf("%s -> ", r->name);
 			r = r->next;
 		}
 		printf("NULL\n");
@@ -38,12 +38,15 @@ void print_graph(t_edge *graph)
 	printf("\n");
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	t_lemin	*lem;
 
 	lem = parse_lem();
 	print_graph(lem->graph);
-	
+	free_lemin(&lem);
+	while (1)
+	{
+	}
 	return (0);
 }

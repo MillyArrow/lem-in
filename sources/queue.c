@@ -13,10 +13,10 @@
 #include "queue.h"
 
 /*
- * Tried to release a structure for the bfs. Leave for the later.
- */
+** Tried to release a structure for the bfs. Leave for the later.
+*/
 
-t_queue			*malloc_queue()
+t_queue			*malloc_queue(void)
 {
 	t_queue	*queue;
 
@@ -38,7 +38,7 @@ t_queue_node	*malloc_queue_node(void *item)
 	return (node);
 }
 
-void	add_queue(t_queue *queue, void *item)
+void			add_queue(t_queue *queue, void *item)
 {
 	t_queue_node	*node;
 
@@ -56,7 +56,7 @@ void	add_queue(t_queue *queue, void *item)
 	}
 }
 
-void	*pop_queue(t_queue *queue)
+void			*pop_queue(t_queue *queue)
 {
 	t_queue_node	*node;
 	void			*item;

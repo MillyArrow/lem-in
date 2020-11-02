@@ -12,6 +12,13 @@
 
 #include "lemin.h"
 
+void	error_w_del(char **line)
+{
+	ft_strdel(line);
+	write(2, "ERROR\n", 6);
+	exit(0);
+}
+
 void	error(void)
 {
 	write(2, "ERROR\n", 6);

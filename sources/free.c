@@ -12,10 +12,9 @@
 
 #include "lemin.h"
 
-
-void free_arr(char **str)
+void	free_arr(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -24,4 +23,27 @@ void free_arr(char **str)
 		i++;
 	}
 	free(str);
+}
+
+void	free_room(t_room **room)
+{
+	ft_strdel(&((*room)->name));
+	while ((*room)->next)
+		free_room(&((*room)->next));
+	ft_memdel((void **)&(*room));
+}
+
+void	free_edge(t_edge **edge)
+{
+	if ((*edge)->room)
+		free_room(&((*edge)->room));
+	while ((*edge)->next)
+		free_edge(&((*edge)->next));
+	ft_memdel((void **)&(*edge));
+}
+
+void	free_lemin(t_lemin **lem)
+{
+	free_edge(&(*lem)->graph);
+	free(*lem);
 }

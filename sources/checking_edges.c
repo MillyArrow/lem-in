@@ -13,13 +13,13 @@
 #include "lemin.h"
 
 /*
- * Ignoring the comments.
- */
+** Ignoring the comments.
+*/
 
-int check_edge_line(char **line)
+int		check_edge_line(char **line)
 {
-	int res;
-	char *new_line;
+	int		res;
+	char	*new_line;
 
 	while ((res = get_next_line(0, &new_line)))
 	{
@@ -28,6 +28,8 @@ int check_edge_line(char **line)
 		if (new_line[0] != '#')
 		{
 			*line = new_line;
+			ft_putstr(*line);
+			ft_putchar('\n');
 			break ;
 		}
 		else
@@ -37,19 +39,19 @@ int check_edge_line(char **line)
 }
 
 /*
- * First of all we check the correctness of the input. Make sure
- * that all of the room are existing, and finally adding the edge.
- */
+** First of all we check the correctness of the input. Make sure
+** that all of the room are existing, and finally adding the edge.
+*/
 
-void adding_edges(t_lemin *lem, char *line)
+void	adding_edges(t_lemin *lem, char *line)
 {
-	char **str;
+	char	**str;
 
 	str = ft_strsplit(line, '-');
 	if (str == NULL || str[0] == NULL || str[0][0] == 'L' || !str[1])
-		error();
+		error_w_del(&line);
 	if (!search_name(lem, str[0]) || !search_name(lem, str[1]))
-		error();
+		error_w_del(&line);
 	add_edge(lem->graph, ft_strdup(str[0]), ft_strdup(str[1]));
 	free_arr(str);
 }

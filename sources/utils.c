@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-int check_number(char *str)
+int	check_number(char *str)
 {
 	int i;
 

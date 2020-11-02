@@ -13,8 +13,8 @@
 #include "lemin.h"
 
 /*
- * All the functions which are needed for the room structure are placed here.
- */
+** All the functions which are needed for the room structure are placed here.
+*/
 
 t_room	*new_room(char *name)
 {
@@ -30,13 +30,13 @@ t_room	*new_room(char *name)
 }
 
 /*
- * Adding new room to the graph. Adding in the beginning.
- * flag - shows as whether new room is start, end or a regular room.
- *     0 - regular room
- * 	   1 - the start
- *     2 - the end
- * In case flag is not 0, assign the pointer of the start/end
- */
+** Adding new room to the graph. Adding in the beginning.
+** flag - shows as whether new room is start, end or a regular room.
+**     0 - regular room
+** 	   1 - the start
+**     2 - the end
+** In case flag is not 0, assign the pointer of the start/end
+*/
 
 void	add_new_room(t_lemin *lem, t_room *room, int flag)
 {
@@ -58,10 +58,10 @@ void	add_new_room(t_lemin *lem, t_room *room, int flag)
 }
 
 /*
- * Adding a new room to the end of the list of the rooms the original
- * room point to.
- * Is used when we add edges.
- */
+** Adding a new room to the end of the list of the rooms the original
+** room point to.
+** Is used when we add edges.
+*/
 
 void	add_room(t_edge *graph, t_room *new)
 {
