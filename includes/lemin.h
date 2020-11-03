@@ -20,17 +20,20 @@
 
 typedef struct		s_room
 {
+	short			visited;
 	char			*name;
 	int				x;
 	int				y;
-	struct s_room	*next;
+	struct s_edge  	*edge_next;
+	struct s_edge	*edge_prev;
+	struct s_room	*room_next;
 }					t_room;
 
 typedef struct		s_edge
 {
-	short			visited;
-	t_room			*room;
-	struct s_edge	*next;
+	t_room			*next;
+	t_room			*prev;
+	struct s_edge	*edge_next;
 }					t_edge;
 
 typedef struct		s_lemin
@@ -39,7 +42,7 @@ typedef struct		s_lemin
 	int				rooms;
 	t_room			*start;
 	t_room			*end;
-	t_edge			*graph;
+	t_room			*graph;
 }					t_lemin;
 
 t_lemin				*parse_lem(void);
@@ -48,15 +51,15 @@ t_lemin				*parse_lem(void);
 ** room.c
 */
 
-t_room				*new_room(char *name);
+t_room				*new_room(char *name, char *x, char *y);
 void				add_new_room(t_lemin *lem, t_room *room, int flag);
-void				add_room(t_edge *graph, t_room *new);
 
 /*
 ** edge.c
 */
 
-void				add_edge(t_edge *graph, char *src, char *dst);
+void				add_edge(t_room *graph, char *src, char *dst);
+t_edge				*new_edge(t_room *src, t_room *dst);
 
 /*
 ** init_lem.c
@@ -76,6 +79,7 @@ void				error_w_del(char **line);
 */
 
 void				free_arr(char **str);
+void				free_lemin(t_lemin **lem);
 
 /*
 ** checking_rooms.c
@@ -109,6 +113,6 @@ int					check_number(char *str);
 ** To del
 */
 
-void				print_graph(t_edge *graph);
+void				print_graph(t_room *graph);
 
 #endif

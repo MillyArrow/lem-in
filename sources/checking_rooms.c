@@ -98,9 +98,7 @@ void	add_rooom(t_lemin *lem, int check, char *line)
 	if (!str[1] || !str[2] || str[3] || str[0][0] == '#')
 		error();
 	check_input(lem, str);
-	room = new_room(ft_strdup(str[0]));
-	room->x = ft_atoi(str[1]);
-	room->y = ft_atoi(str[2]);
+	room = new_room(ft_strdup(str[0]), str[1], str[2]);
 	add_new_room(lem, room, check);
 	free_arr(str);
 }

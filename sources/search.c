@@ -18,17 +18,14 @@
 
 int	search_coord(t_lemin *lem, int x, int y)
 {
-	t_edge	*p;
 	t_room	*r;
 
-	p = lem->graph;
-	r = NULL;
-	while (p)
+	r = lem->graph;
+	while (r)
 	{
-		r = p->room;
 		if (r->x == x && r->y == y)
 			return (1);
-		p = p->next;
+		r = r->room_next;
 	}
 	return (0);
 }
@@ -39,17 +36,14 @@ int	search_coord(t_lemin *lem, int x, int y)
 
 int	search_name(t_lemin *lem, char *room_name)
 {
-	t_edge	*p;
 	t_room	*r;
 
-	p = lem->graph;
-	r = NULL;
-	while (p)
+	r = lem->graph;
+	while (r)
 	{
-		r = p->room;
 		if (!ft_strcmp(room_name, r->name))
 			return (1);
-		p = p->next;
+		r = r->room_next;
 	}
 	return (0);
 }

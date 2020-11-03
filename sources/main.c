@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lemin.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlintill <rlintill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,23 +17,24 @@
 ** Needed for the debug. Delete later.
 */
 
-void	print_graph(t_edge *graph)
+void	print_graph(t_room *graph)
 {
-	t_edge	*p;
-	t_room	*r;
+	t_room	*p;
+	t_edge	*r;
 
 	p = graph;
 	r = NULL;
 	while (p)
 	{
-		r = p->room;
+		r = p->edge_next;
+		printf("%s -> ", p->name);
 		while (r)
 		{
-			printf("%s -> ", r->name);
-			r = r->next;
+			printf("%s -> ", r->next->name);
+			r = r->edge_next;
 		}
 		printf("NULL\n");
-		p = p->next;
+		p = p->room_next;
 	}
 	printf("\n");
 }

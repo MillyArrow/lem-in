@@ -25,25 +25,29 @@ void	free_arr(char **str)
 	free(str);
 }
 
-void	free_room(t_room **room)
-{
-	ft_strdel(&((*room)->name));
-	while ((*room)->next)
-		free_room(&((*room)->next));
-	ft_memdel((void **)&(*room));
-}
-
 void	free_edge(t_edge **edge)
 {
-	if ((*edge)->room)
-		free_room(&((*edge)->room));
-	while ((*edge)->next)
-		free_edge(&((*edge)->next));
+	(*edge)->next = NULL;
+	(*edge)->prev = NULL;
+	while ((*edge)->edge_next)
+		free_edge(&((*edge)->edge_next));
 	ft_memdel((void **)&(*edge));
+}
+
+void	free_graph(t_room **graph)
+{
+	ft_strdel(&((*graph)->name));
+	if ((*graph)->edge_next)
+		free_edge(&((*graph)->edge_next));
+	if ((*graph)->edge_prev)
+		free_edge(&((*graph)->edge_prev));
+	while ((*graph)->room_next)
+		free_graph(&((*graph)->room_next));
+	ft_memdel((void **)&(*graph));
 }
 
 void	free_lemin(t_lemin **lem)
 {
-	free_edge(&(*lem)->graph);
+	free_graph(&(*lem)->graph);
 	free(*lem);
 }

@@ -16,16 +16,19 @@
 ** All the functions which are needed for the room structure are placed here.
 */
 
-t_room	*new_room(char *name)
+t_room	*new_room(char *name, char *x, char *y)
 {
 	t_room *room;
 
 	if (!(room = (t_room*)ft_memalloc(sizeof(t_room))))
 		return (NULL);
 	room->name = name;
-	room->x = 0;
-	room->y = 0;
-	room->next = NULL;
+	room->visited = 0;
+	room->x = ft_atoi(x);
+	room->y = ft_atoi(y);
+	room->edge_next = NULL;
+	room->edge_prev = NULL;
+	room->room_next = NULL;
 	return (room);
 }
 
@@ -40,37 +43,11 @@ t_room	*new_room(char *name)
 
 void	add_new_room(t_lemin *lem, t_room *room, int flag)
 {
-	t_edge	*new;
-	t_edge	**graph;
-
-	graph = &(lem->graph);
-	if (!(new = (t_edge*)ft_memalloc(sizeof(t_edge))))
-		return ;
-	new->visited = 0;
-	new->room = room;
-	new->next = *graph;
-	*graph = new;
+	room->room_next = lem->graph;
+	lem->graph = room;
 	if (flag == 1)
 		lem->start = room;
 	else if (flag == 2)
 		lem->end = room;
 	lem->rooms += 1;
-}
-
-/*
-** Adding a new room to the end of the list of the rooms the original
-** room point to.
-** Is used when we add edges.
-*/
-
-void	add_room(t_edge *graph, t_room *new)
-{
-	t_room	*p;
-
-	p = graph->room;
-	while (p->next)
-	{
-		p = p->next;
-	}
-	p->next = new;
 }

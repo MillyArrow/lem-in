@@ -34,7 +34,7 @@ SOURCES_LIST = checking_edges.c \
  	error.c \
 	free.c \
 	init_lem.c \
-	lemin.c \
+	main.c \
 	parse.c \
 	queue.c \
 	room.c \
