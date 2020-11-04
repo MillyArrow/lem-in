@@ -27,20 +27,20 @@ t_queue			*malloc_queue(void)
 	return (queue);
 }
 
-t_queue_node	*malloc_queue_node(void *item)
+t_node			*malloc_node(void *item)
 {
-	t_queue_node	*node;
+	t_node	*node;
 
-	if (!(node = (t_queue_node*)ft_memalloc(sizeof(t_queue_node))))
+	if (!(node = (t_node*)ft_memalloc(sizeof(t_node))))
 		return (NULL);
 	node->node = item;
 	node->next = NULL;
 	return (node);
 }
 
-void			add_queue(t_queue *queue, void *item)
+void			queue_add_end(t_queue *queue, void *item)
 {
-	t_queue_node	*node;
+	t_node	*node;
 
 	if (!(node = malloc_queue_node(item)))
 		return ;
@@ -56,9 +56,9 @@ void			add_queue(t_queue *queue, void *item)
 	}
 }
 
-void			*pop_queue(t_queue *queue)
+void			*queue_del_top(t_queue *queue)
 {
-	t_queue_node	*node;
+	t_node			*node;
 	void			*item;
 
 	node = queue->first;
