@@ -33,7 +33,7 @@ t_node			*malloc_node(void *item)
 
 	if (!(node = (t_node*)ft_memalloc(sizeof(t_node))))
 		return (NULL);
-	node->node = item;
+	node->room = item;
 	node->next = NULL;
 	return (node);
 }
@@ -42,7 +42,7 @@ void			queue_add_end(t_queue *queue, void *item)
 {
 	t_node	*node;
 
-	if (!(node = malloc_queue_node(item)))
+	if (!(node = malloc_node(item)))
 		return ;
 	if (queue->last == NULL && queue->first == NULL)
 	{
@@ -64,10 +64,18 @@ void			*queue_del_top(t_queue *queue)
 	node = queue->first;
 	if (node == NULL)
 		return (NULL);
-	item = node->node;
+	item = node->room;
 	queue->first = node->next;
 	if (queue->first == NULL)
 		queue->last = NULL;
 	free(node);
 	return (item);
+}
+
+int 			is_empty(t_queue *queue)
+{
+	if (queue->first == NULL && queue->last == NULL)
+		return(TRUE);
+	else
+		return(FALSE);
 }
