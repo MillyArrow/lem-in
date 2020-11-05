@@ -14,26 +14,21 @@
 # define QUEUE_H
 
 # include <stdlib.h>
-# include "lemin.h"
 # include "libft.h"
 
 typedef struct			s_node
 {
 	void 				*room;
 	struct s_node 		*next;
+	struct s_node		*head;
+	struct s_node		*tail;
 }						t_node;
 
-typedef struct			s_queue
-{
-	t_node				*first;
-	t_node				*last;
-}						t_queue;
 
-t_queue					*malloc_queue();
+
 t_node					*malloc_node(void *item);
-void					queue_add_end(t_queue *queue, void *item);
-void					*queue_del_top(t_queue *queue);
-int			 			is_empty(t_queue *queue);
-void					print_queue(t_queue *queue);
-
+void					queue_add_end(t_node *node, void *item);
+void					*queue_del_top(t_node *node);
+int 					is_empty(t_node *queue);
+t_node					*malloc_queue(void);
 #endif

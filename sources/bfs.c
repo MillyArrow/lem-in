@@ -14,34 +14,32 @@
 
 void			bfs(t_lemin *lem_in)
 {
-	t_queue *queue;
-	t_node	*node;
-	t_room	*room_tmp;
+	t_node 		*queue;
+	t_node		*temp;
+	t_room		*room_tmp;
 
-	if (!(queue = (t_queue *)malloc_queue()))
+	if(!(queue = malloc_queue()))
 		return ;
+	temp = NULL;
+	room_tmp = NULL;
 	queue_add_end(queue, lem_in->start);
-	node = queue->first;
-	room_tmp = (t_room *)node->room;
 	while (!is_empty(queue))
 	{
 		print_queue(queue);
+		adj_list(queue,lem_in);
+		room_tmp = (t_room *)queue_del_top(queue);
 		room_tmp->visited = 1;
 		ft_printf("Visited : %s\n",room_tmp->name);
-		// adj list
-
-		queue_del_top(queue);
-
 	}
 
 }
 
-void			print_queue(t_queue *queue)
+void			print_queue(t_node *queue)
 {
 	t_room		*room_tmp;
 	t_node 		*node_tmp;
 
-	node_tmp = queue->first;
+	node_tmp = queue->head;
 	ft_printf("Queue: ");
 	while (node_tmp)
 	{
@@ -51,9 +49,23 @@ void			print_queue(t_queue *queue)
 	}
 }
 
-void			adj_list(t_node *node, t_lemin *lem_in)
+void			adj_list(t_node *queue, t_lemin *lem_in)
 {
+	t_edge *edge_next;
+	t_room *room_tmp;
 
+	room_tmp = (t_room *)queue->head->room;
+	edge_next = room_tmp->edge_next;
+	while(edge_next)
+	{
+		if (edge_next->next)
+		{
+			room_tmp = edge_next->next;
+			if (room_tmp->visited == 0)
+				queue_add_end(queue,room_tmp);
+		}
+		edge_next = edge_next->edge_next;
+	}
 }
 /*
  * Обход графа в ширину.

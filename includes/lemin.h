@@ -115,4 +115,11 @@ int					check_number(char *str);
 
 void				print_graph(t_room *graph);
 
+/*
+ * BFS
+ */
+
+void					adj_list(t_node *node, t_lemin *lem_in);
+void					print_queue(t_node *queue);
+void					bfs(t_lemin *lem_in);
 #endif

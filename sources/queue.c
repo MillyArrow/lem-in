@@ -16,17 +16,6 @@
 ** Tried to release a structure for the bfs. Leave for the later.
 */
 
-t_queue			*malloc_queue(void)
-{
-	t_queue	*queue;
-
-	if (!(queue = (t_queue*)ft_memalloc(sizeof(t_queue))))
-		return (NULL);
-	queue->first = NULL;
-	queue->last = NULL;
-	return (queue);
-}
-
 t_node			*malloc_node(void *item)
 {
 	t_node	*node;
@@ -35,46 +24,61 @@ t_node			*malloc_node(void *item)
 		return (NULL);
 	node->room = item;
 	node->next = NULL;
+	node->head = NULL;
+	node->tail = NULL;
 	return (node);
 }
 
-void			queue_add_end(t_queue *queue, void *item)
+t_node			*malloc_queue(void)
 {
 	t_node	*node;
 
-	if (!(node = malloc_node(item)))
+	if (!(node = (t_node*)ft_memalloc(sizeof(t_node))))
+		return (NULL);
+	node->room = NULL;
+	node->next = NULL;
+	node->head = NULL;
+	node->tail = NULL;
+	return (node);
+}
+
+void			queue_add_end(t_node *node, void *item)
+{
+	t_node	*new_node;
+
+	if (!(new_node = malloc_node(item)))
 		return ;
-	if (queue->last == NULL && queue->first == NULL)
+	if (node->tail == NULL && node->head == NULL)
 	{
-		queue->last = node;
-		queue->first = node;
+		node->head = new_node;
+		node->tail = new_node;
 	}
 	else
 	{
-		queue->last->next = node;
-		queue->last = node;
+		node->tail->next = new_node;
+		node->tail = new_node;
 	}
 }
 
-void			*queue_del_top(t_queue *queue)
+void			*queue_del_top(t_node *node)
 {
-	t_node			*node;
+	t_node			*tmp;
 	void			*item;
 
-	node = queue->first;
-	if (node == NULL)
+	tmp = node->head;
+	if (tmp == NULL)
 		return (NULL);
-	item = node->room;
-	queue->first = node->next;
-	if (queue->first == NULL)
-		queue->last = NULL;
-	free(node);
+	item = tmp->room;
+	node->head = node->next;
+	if (node->head == NULL)
+		node->tail = NULL;
+	free(tmp);
 	return (item);
 }
 
-int 			is_empty(t_queue *queue)
+int 			is_empty(t_node *queue)
 {
-	if (queue->first == NULL && queue->last == NULL)
+	if (queue->head == NULL && queue->tail == NULL)
 		return(TRUE);
 	else
 		return(FALSE);

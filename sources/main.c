@@ -45,9 +45,8 @@ int		main(int argc, char **argv)
 
 	lem = parse_lem();
 	print_graph(lem->graph);
+	ft_printf("BFS:\n");
+	bfs(lem);
 	free_lemin(&lem);
-	while (1)
-	{
-	}
 	return (0);
 }
