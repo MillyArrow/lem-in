@@ -12,30 +12,26 @@
 
 #include "lemin.h"
 
-void			bfs(t_lemin *lem_in)
+static int			search_n(t_queue *queue, char *room_name)
 {
-	t_queue 	*queue;
-	t_room		*room_tmp;
+	t_node			*n;
+	t_room			*r;
 
-	if(!(queue = malloc_queue()))
-		return ;
-	room_tmp = NULL;
-	queue_add_end(queue, lem_in->start);
-	while (!is_empty(queue))
+	n = queue->head;
+	while (n)
 	{
-		print_queue(queue);
-		adj_list(queue,lem_in);
-		room_tmp = (t_room *)queue_del_top(queue);
-		room_tmp->visited = 1;
-		ft_printf("Visited : %s\n",room_tmp->name);
+		r = n->room;
+		if (!ft_strcmp(room_name, r->name))
+			return (TRUE);
+		n = n->next;
 	}
-
+	return (FALSE);
 }
 
-void			print_queue(t_queue *queue)
+static void			print_queue(t_queue *queue)
 {
-	t_room		*room_tmp;
-	t_node 		*node_tmp;
+	t_room			*room_tmp;
+	t_node 			*node_tmp;
 
 	node_tmp = queue->head;
 	ft_printf("Queue: \n");
@@ -47,22 +43,41 @@ void			print_queue(t_queue *queue)
 	}
 }
 
-void			adj_list(t_queue *queue, t_lemin *lem_in)
+static void			adj_list(t_queue *queue, t_lemin *lem_in)
 {
-	t_edge 		*edge_next;
-	t_room 		*room_tmp;
+	t_edge 			*edge_next;
+	t_room 			*room_tmp;
 
 	room_tmp = (t_room *)queue->head->room;
 	edge_next = room_tmp->edge_next;
-	while(edge_next)
+	while (edge_next)
 	{
 		if (edge_next->next)
 		{
 			room_tmp = edge_next->next;
-			if (room_tmp->visited == 0)
-				queue_add_end(queue,room_tmp);
+			if (room_tmp->visited == 0 && !search_n(queue, room_tmp->name))
+				queue_add_end(queue, room_tmp);
 		}
 		edge_next = edge_next->edge_next;
+	}
+}
+
+void				bfs(t_lemin *lem_in)
+{
+	t_queue 		*queue;
+	t_room			*room_tmp;
+
+	if(!(queue = malloc_queue()))
+		return ;
+	room_tmp = NULL;
+	queue_add_end(queue, lem_in->start);
+	while (!is_empty(queue))
+	{
+		print_queue(queue);
+		adj_list(queue, lem_in);
+		room_tmp = (t_room *)queue_del_top(queue);
+		room_tmp->visited = 1;
+		ft_printf("Visited : %s\n", room_tmp->name);
 	}
 }
 /*

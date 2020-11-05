@@ -119,7 +119,5 @@ void				print_graph(t_room *graph);
  * BFS
  */
 
-void					adj_list(t_queue *queue, t_lemin *lem_in);
-void					print_queue(t_queue *queue);
 void					bfs(t_lemin *lem_in);
 #endif
