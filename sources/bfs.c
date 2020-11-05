@@ -79,6 +79,7 @@ void				bfs(t_lemin *lem_in)
 		room_tmp->visited = 1;
 		ft_printf("Visited : %s\n", room_tmp->name);
 	}
+	free(queue);
 }
 /*
  * Обход графа в ширину.

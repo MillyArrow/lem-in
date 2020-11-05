@@ -47,6 +47,12 @@ int		main(int argc, char **argv)
 	print_graph(lem->graph);
 	ft_printf("BFS:\n");
 	bfs(lem);
+	ft_printf("\n");
+	ft_printf("END visited?\n");
+	if (lem->end->visited)
+		ft_printf("YES\n\n");
+	else
+		ft_printf("NO\n\n");
 	free_lemin(&lem);
 	return (0);
 }
