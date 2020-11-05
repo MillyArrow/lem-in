@@ -14,13 +14,11 @@
 
 void			bfs(t_lemin *lem_in)
 {
-	t_node 		*queue;
-	t_node		*temp;
+	t_queue 	*queue;
 	t_room		*room_tmp;
 
 	if(!(queue = malloc_queue()))
 		return ;
-	temp = NULL;
 	room_tmp = NULL;
 	queue_add_end(queue, lem_in->start);
 	while (!is_empty(queue))
@@ -34,25 +32,25 @@ void			bfs(t_lemin *lem_in)
 
 }
 
-void			print_queue(t_node *queue)
+void			print_queue(t_queue *queue)
 {
 	t_room		*room_tmp;
 	t_node 		*node_tmp;
 
 	node_tmp = queue->head;
-	ft_printf("Queue: ");
+	ft_printf("Queue: \n");
 	while (node_tmp)
 	{
 		room_tmp = (t_room *)node_tmp->room;
-		ft_printf("%s ", room_tmp->name);
+		ft_printf("%s \n", room_tmp->name);
 		node_tmp = node_tmp->next;
 	}
 }
 
-void			adj_list(t_node *queue, t_lemin *lem_in)
+void			adj_list(t_queue *queue, t_lemin *lem_in)
 {
-	t_edge *edge_next;
-	t_room *room_tmp;
+	t_edge 		*edge_next;
+	t_room 		*room_tmp;
 
 	room_tmp = (t_room *)queue->head->room;
 	edge_next = room_tmp->edge_next;

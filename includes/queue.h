@@ -20,15 +20,17 @@ typedef struct			s_node
 {
 	void 				*room;
 	struct s_node 		*next;
-	struct s_node		*head;
-	struct s_node		*tail;
 }						t_node;
 
-
+typedef struct			s_queue
+{
+	struct s_node		*head;
+	struct s_node		*tail;
+}						t_queue;
 
 t_node					*malloc_node(void *item);
-void					queue_add_end(t_node *node, void *item);
-void					*queue_del_top(t_node *node);
-int 					is_empty(t_node *queue);
-t_node					*malloc_queue(void);
+void					queue_add_end(t_queue *queue, void *item);
+void					*queue_del_top(t_queue *queue);
+int 					is_empty(t_queue *queue);
+t_queue					*malloc_queue(void);
 #endif
