@@ -115,4 +115,9 @@ int					check_number(char *str);
 
 void				print_graph(t_room *graph);
 
+/*
+ * BFS
+ */
+
+void					bfs(t_lemin *lem_in);
 #endif
