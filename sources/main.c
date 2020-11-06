@@ -44,10 +44,12 @@ int		main(int argc, char **argv)
 	t_lemin	*lem;
 
 	lem = parse_lem();
-	print_graph(lem->graph);
+//	print_graph(lem->graph);
+	search_path(lem);
+	print_path(lem);
 	free_lemin(&lem);
-	while (1)
+/*	while (1)
 	{
-	}
+	}*/
 	return (0);
 }

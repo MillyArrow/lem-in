@@ -24,6 +24,7 @@ typedef struct		s_room
 	char			*name;
 	int				x;
 	int				y;
+	struct s_path	*path;
 	struct s_edge  	*edge_next;
 	struct s_edge	*edge_prev;
 	struct s_room	*room_next;
@@ -31,10 +32,17 @@ typedef struct		s_room
 
 typedef struct		s_edge
 {
+	int				weight;
 	t_room			*next;
 	t_room			*prev;
 	struct s_edge	*edge_next;
 }					t_edge;
+
+typedef struct		s_path
+{
+	int				length;
+	t_edge			*edge;
+}					t_path;
 
 typedef struct		s_lemin
 {
@@ -108,6 +116,14 @@ int					search_name(t_lemin *lem, char *room_name);
 */
 
 int					check_number(char *str);
+
+/*
+**	path.c
+*/
+
+t_path				*init_path(void);
+void				search_path(t_lemin *lem);
+void				print_path(t_lemin *lem);
 
 /*
 ** To del
