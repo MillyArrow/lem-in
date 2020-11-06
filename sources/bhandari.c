@@ -32,6 +32,11 @@ void		bhandari(t_lemin *le_min)
 	room = le_min->start;
 	lock_path(edge->next,edge->prev);
 	lock_path(edge->prev,edge->next);
+	while (room)
+	{
+		room->path->length = INT_MAX - 1;
+		room = room->room_next;
+	}
 	search_path(le_min);
 	ft_printf("NEW PATH:\n");
 	print_path(le_min);
