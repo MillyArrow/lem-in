@@ -38,25 +38,39 @@ void	add_edges_prev(t_room *out, t_room *to, t_edge *edge)
 	}
 }
 
-void	add_edges_to_rooms(t_room *one, t_room *two)
+void	add_edges_to_rooms(t_room *one, t_room *two, int id)
 {
 	t_edge	*to_one;
 	t_edge	*to_two;
 	t_edge	*out_one;
 	t_edge	*out_two;
 
-	if (!(to_one = new_edge(two, one)))
+	if (!(to_one = new_edge(two, one, id)))
 		return ;
-	if (!(to_two = new_edge(one, two)))
+	if (!(to_two = new_edge(one, two, id)))
 		return ;
-	if (!(out_one = new_edge(one, two)))
+	if (!(out_one = new_edge(one, two, id)))
 		return ;
-	if (!(out_two = new_edge(two, one)))
+	if (!(out_two = new_edge(two, one, id)))
 		return ;
 	add_edges_next(two, one, to_one);
 	add_edges_next(one, two, to_two);
 	add_edges_prev(two, one, out_two);
 	add_edges_prev(one, two, out_one);
+}
+
+t_edge	*search_edge_by_id(t_edge *edges, int id)
+{
+	t_edge	*p;
+
+	p = edges;
+	while (p)
+	{
+		if (p->id == id)
+			return (p);
+		p = p->edge_next;
+	}
+	return (NULL);
 }
 
 /*
@@ -78,17 +92,32 @@ static t_room	*search(t_room *graph, char *name)
 	return (NULL);
 }
 
-t_edge	*new_edge(t_room *src, t_room *dst)
+t_edge	*new_edge(t_room *src, t_room *dst, int id)
 {
 	t_edge	*new;
 
 	if(!(new = (t_edge*)ft_memalloc(sizeof(t_edge))))
 		return (NULL);
 	new->weight = 1;
+	new->id = id;
 	new->next = dst;
 	new->prev = src;
 	new->edge_next = NULL;
 	return (new);
+}
+
+int			check_edge(t_room *one, t_room *two)
+{
+	t_edge	*edge;
+
+	edge = one->edge_next;
+	while (edge)
+	{
+		if (edge->next == two)
+			return (1);
+		edge = edge->edge_next;
+	}
+	return (0);
 }
 
 /*
@@ -98,12 +127,16 @@ t_edge	*new_edge(t_room *src, t_room *dst)
 ** of the rooms the src point to. The same we do in the another direction.
 */
 
-void			add_edge(t_room *graph, char *src, char *dst)
+void			add_edge(t_lemin *lem, char *one, char *two)
 {
 	t_room	*one_room;
 	t_room	*two_room;
 
-	one_room = search(graph, src);
-	two_room = search(graph, dst);
-	add_edges_to_rooms(one_room, two_room);
+	one_room = search(lem->graph, one);
+	two_room = search(lem->graph, two);
+	if (!check_edge(one_room, two_room))
+	{
+		add_edges_to_rooms(one_room, two_room, lem->edges);
+		lem->edges += 1;
+	}
 }

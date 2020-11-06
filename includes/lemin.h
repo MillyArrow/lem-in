@@ -32,6 +32,7 @@ typedef struct		s_room
 
 typedef struct		s_edge
 {
+	int				id;
 	int				weight;
 	t_room			*next;
 	t_room			*prev;
@@ -48,6 +49,7 @@ typedef struct		s_lemin
 {
 	int				ants;
 	int				rooms;
+	int				edges;
 	t_room			*start;
 	t_room			*end;
 	t_room			*graph;
@@ -66,8 +68,8 @@ void				add_new_room(t_lemin *lem, t_room *room, int flag);
 ** edge.c
 */
 
-void				add_edge(t_room *graph, char *src, char *dst);
-t_edge				*new_edge(t_room *src, t_room *dst);
+void				add_edge(t_lemin *lem, char *one, char *two);
+t_edge				*new_edge(t_room *src, t_room *dst, int id);
 
 /*
 ** init_lem.c

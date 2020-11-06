@@ -52,7 +52,7 @@ void	adding_edges(t_lemin *lem, char *line)
 		error_w_del(&line);
 	if (!search_name(lem, str[0]) || !search_name(lem, str[1]))
 		error_w_del(&line);
-	add_edge(lem->graph, str[0], str[1]);
+	add_edge(lem, str[0], str[1]);
 	free_arr(str);
 }
 

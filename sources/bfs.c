@@ -55,7 +55,7 @@ static void			adj_list(t_queue *queue, t_lemin *lem_in)
 		if (edge_next->next)
 		{
 			room_tmp = edge_next->next;
-			if (room_tmp->visited == 0 && !search_n(queue, room_tmp->name))
+			if (room_tmp->visited == 0)
 				queue_add_end(queue, room_tmp);
 		}
 		edge_next = edge_next->edge_next;
