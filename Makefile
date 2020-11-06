@@ -31,6 +31,8 @@ SOURCES_DIRECTORY = ./sources/
 SOURCES_LIST = checking_edges.c \
 	checking_rooms.c \
 	edge.c \
+	path.c \
+	bfs.c \
  	error.c \
 	free.c \
 	init_lem.c \

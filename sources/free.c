@@ -37,6 +37,7 @@ void	free_edge(t_edge **edge)
 void	free_graph(t_room **graph)
 {
 	ft_strdel(&((*graph)->name));
+	ft_memdel((void **)&((*graph)->path));
 	if ((*graph)->edge_next)
 		free_edge(&((*graph)->edge_next));
 	if ((*graph)->edge_prev)

@@ -44,12 +44,20 @@ int		main(int argc, char **argv)
 	t_lemin	*lem;
 
 	lem = parse_lem();
-//	print_graph(lem->graph);
 	search_path(lem);
 	print_path(lem);
+//	print_graph(lem->graph);
+//	ft_printf("BFS:\n");
+	bfs(lem);
+//	ft_printf("\n");
+	ft_printf("END visited?\n");
+	if (lem->end->visited)
+		ft_printf("YES\n\n");
+	else
+		ft_printf("NO\n\n");
 	free_lemin(&lem);
-/*	while (1)
-	{
-	}*/
+	while (1){
+		
+	}
 	return (0);
 }

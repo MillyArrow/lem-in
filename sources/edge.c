@@ -84,6 +84,7 @@ t_edge	*new_edge(t_room *src, t_room *dst)
 
 	if(!(new = (t_edge*)ft_memalloc(sizeof(t_edge))))
 		return (NULL);
+	new->weight = 1;
 	new->next = dst;
 	new->prev = src;
 	new->edge_next = NULL;

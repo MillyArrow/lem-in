@@ -26,6 +26,7 @@ t_room	*new_room(char *name, char *x, char *y)
 	room->visited = 0;
 	room->x = ft_atoi(x);
 	room->y = ft_atoi(y);
+	room->path = init_path();
 	room->edge_next = NULL;
 	room->edge_prev = NULL;
 	room->room_next = NULL;
@@ -48,6 +49,9 @@ void	add_new_room(t_lemin *lem, t_room *room, int flag)
 	if (flag == 1)
 		lem->start = room;
 	else if (flag == 2)
+	{
+		room->path->length = 0;
 		lem->end = room;
+	}
 	lem->rooms += 1;
 }

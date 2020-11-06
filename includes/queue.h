@@ -16,21 +16,21 @@
 # include <stdlib.h>
 # include "libft.h"
 
-typedef struct			s_queue_node
+typedef struct			s_node
 {
-	void				*node;
-	struct s_queue_node *next;
-}						t_queue_node;
+	void 				*room;
+	struct s_node 		*next;
+}						t_node;
 
 typedef struct			s_queue
 {
-	t_queue_node		*first;
-	t_queue_node		*last;
+	struct s_node		*head;
+	struct s_node		*tail;
 }						t_queue;
 
-t_queue					*malloc_queue();
-t_queue_node			*malloc_queue_node(void *item);
-void					add_queue(t_queue *queue, void *item);
-void					*pop_queue(t_queue *queue);
-
+t_node					*malloc_node(void *item);
+void					queue_add_end(t_queue *queue, void *item);
+void					*queue_del_top(t_queue *queue);
+int 					is_empty(t_queue *queue);
+t_queue					*malloc_queue(void);
 #endif

@@ -131,4 +131,9 @@ void				print_path(t_lemin *lem);
 
 void				print_graph(t_room *graph);
 
+/*
+ * BFS
+ */
+
+void					bfs(t_lemin *lem_in);
 #endif

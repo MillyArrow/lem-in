@@ -29,9 +29,6 @@ int		check_line(char **line)
 	{
 		if (res < 0 || new_line[0] == '\0')
 			error_w_del(&new_line);
-		if (new_line[0] == '#' && new_line[1] == '#' &&
-			ft_strcmp("##start", new_line) && ft_strcmp("##end", new_line))
-			error_w_del(&new_line);
 		if (new_line[0] != '#' || !ft_strcmp("##end", new_line)
 					|| !ft_strcmp("##start", new_line))
 		{
