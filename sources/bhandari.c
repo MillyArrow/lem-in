@@ -1,5 +1,25 @@
 #include "lemin.h"
 
+void		lock_path(t_room *to,t_room *out)
+{
+	t_edge *edge;
+
+	edge = out->edge_next;
+	while(edge)
+	{
+		if (edge->next == to)
+			edge->locked = 1;
+		edge = edge->edge_next;
+	}
+	edge = to->edge_prev;
+	while(edge)
+	{
+		if (edge->prev == out)
+			edge->locked = 1;
+		edge = edge->edge_next;
+	}
+}
+
 void		bhandari(t_lemin *le_min)
 {
 	t_edge	*edge;
@@ -10,25 +30,9 @@ void		bhandari(t_lemin *le_min)
 	print_path(le_min);
 	edge = le_min->start->path->edge;
 	room = le_min->start;
-	while(edge)
-	{
-		edge->weight = -1;
-		ft_printf("ID EDGE:%d\n",edge->id);
-		edge = edge->prev->path->edge;
-	}
+	lock_path(edge->next,edge->prev);
+	lock_path(edge->prev,edge->next);
 	search_path(le_min);
-	ft_printf("PATH:\n");
+	ft_printf("NEW PATH:\n");
 	print_path(le_min);
-}
-
-void		lock_path(t_lemin *le_min)
-{
-	t_edge *edge;
-
-	edge = le_min->start->path->edge->edge_next;
-	while(edge)
-	{
-		edge->locked = 1;
-
-	}
 }
