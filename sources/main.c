@@ -44,8 +44,7 @@ int		main(int argc, char **argv)
 	t_lemin	*lem;
 
 	lem = parse_lem();
-	search_path(lem);
-	print_path(lem);
+	bhandari(lem);
 //	print_graph(lem->graph);
 //	ft_printf("BFS:\n");
 	bfs(lem);
@@ -56,8 +55,5 @@ int		main(int argc, char **argv)
 	else
 		ft_printf("NO\n\n");
 	free_lemin(&lem);
-	while (1){
-		
-	}
 	return (0);
 }

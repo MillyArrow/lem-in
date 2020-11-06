@@ -99,6 +99,7 @@ t_edge	*new_edge(t_room *src, t_room *dst, int id)
 	if(!(new = (t_edge*)ft_memalloc(sizeof(t_edge))))
 		return (NULL);
 	new->weight = 1;
+	new->locked = 0;
 	new->id = id;
 	new->next = dst;
 	new->prev = src;

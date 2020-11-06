@@ -33,6 +33,7 @@ typedef struct		s_room
 typedef struct		s_edge
 {
 	int				id;
+	int				locked;
 	int				weight;
 	t_room			*next;
 	t_room			*prev;
@@ -138,4 +139,6 @@ void				print_graph(t_room *graph);
  */
 
 void					bfs(t_lemin *lem_in);
+
+void					bhandari(t_lemin *le_min);
 #endif
