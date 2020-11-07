@@ -44,6 +44,7 @@ typedef struct		s_path
 {
 	int				length;
 	t_edge			*edge;
+	struct s_path	*next_path;
 }					t_path;
 
 typedef struct		s_lemin
