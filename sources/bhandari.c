@@ -1,6 +1,6 @@
 #include "lemin.h"
 
-void		lock_path(t_room *to,t_room *out)
+void		lock_path(t_room *out, t_room *to)
 {
 	t_edge *edge;
 
@@ -30,8 +30,13 @@ void		bhandari(t_lemin *le_min)
 	print_path(le_min);
 	edge = le_min->start->path->edge;
 	room = le_min->start;
-	lock_path(edge->next,edge->prev);
-	lock_path(edge->prev,edge->next);
+	//lock_path(edge->next,edge->prev);
+	while (edge)
+	{
+		edge->weight = -1;
+		lock_path(edge->prev, edge->next);
+		edge = edge->prev->path->edge;
+	}
 	while (room)
 	{
 		room->path->length = INT_MAX - 1;
