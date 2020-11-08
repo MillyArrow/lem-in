@@ -12,8 +12,7 @@
 
 #include "lemin.h"
 #include <stdio.h>
-
-
+/*
 void print_path(t_lemin *lem)
 {
 	t_room *room;
@@ -22,9 +21,32 @@ void print_path(t_lemin *lem)
 	while (room != lem->end)
 	{
 		ft_printf("%s -> ", room->name);
-		room = room->path->edge->prev;
+		room = room->path->edge->out;
 	}
 	ft_printf("%s\n", room->name);
+}
+*/
+void print_path(t_lemin *lem)
+{
+	t_path *pointer;
+	t_path *path;
+	t_room *room;
+
+	path = lem->start->path->next_path;
+	while (path)
+	{
+		ft_printf("%s -> ", lem->start->name);
+		pointer = path->path;
+		room = pointer->belongs_to;
+		while (room != lem->end)
+		{
+			ft_printf("%s -> ", room->name);
+			pointer = pointer->path;
+			room = pointer->belongs_to;
+		}
+		ft_printf("%s\n", room->name);
+		path = path->next_path;
+	}
 }
 
 void search_path(t_lemin *lem)
@@ -47,10 +69,11 @@ void search_path(t_lemin *lem)
 			}
 			while (edge != NULL)
 			{
-				if (edge->prev->path->length + edge->weight < room->path->length
+				if (edge->out->path->length + edge->weight < room->path->length
 				&& edge->locked == 0)
 				{
-					room->path->length = edge->prev->path->length + edge->weight;
+					room->path->length = edge->out->path->length + edge->weight;
+					room->path->path = edge->out->path;
 					room->path->edge = edge;
 				}
 				edge = edge->edge_next;
@@ -65,13 +88,22 @@ void search_path(t_lemin *lem)
 ** length = infinity = max_int - 1;
 */
 
-t_path	*init_path(void)
+void	add_path(t_room *room, t_path *new)
+{
+	new->next_path = room->path;
+	room->path = new;
+}
+
+t_path	*init_path(t_room *room)
 {
 	t_path *path;
 
 	if (!(path = (t_path*)ft_memalloc(sizeof(t_path))))
 		return (NULL);
 	path->length = INT_MAX - 1;
+	path->belongs_to = room;
 	path->edge = NULL;
+	path->path = NULL;
+	path->next_path = NULL;
 	return (path);
 }

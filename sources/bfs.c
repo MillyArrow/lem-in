@@ -49,12 +49,12 @@ static void			adj_list(t_queue *queue, t_lemin *lem_in)
 	t_room 			*room_tmp;
 
 	room_tmp = (t_room *)queue->head->room;
-	edge_next = room_tmp->edge_next;
+	edge_next = room_tmp->edge_prev;
 	while (edge_next)
 	{
-		if (edge_next->next)
+		if (edge_next->out && edge_next->locked == 0)
 		{
-			room_tmp = edge_next->next;
+			room_tmp = edge_next->out;
 			if (room_tmp->visited == 0)
 				queue_add_end(queue, room_tmp);
 		}
@@ -73,11 +73,11 @@ void				bfs(t_lemin *lem_in)
 	queue_add_end(queue, lem_in->start);
 	while (!is_empty(queue))
 	{
-//		print_queue(queue);
+	//	print_queue(queue);
 		adj_list(queue, lem_in);
 		room_tmp = (t_room *)queue_del_top(queue);
 		room_tmp->visited = 1;
-//		ft_printf("Visited : %s\n", room_tmp->name);
+	//	ft_printf("Visited : %s\n", room_tmp->name);
 	}
 	free(queue);
 }

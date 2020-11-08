@@ -30,7 +30,7 @@ void	print_graph(t_room *graph)
 		printf("%s -> ", p->name);
 		while (r)
 		{
-			printf("%s -> ", r->next->name);
+			printf("%s -> ", r->to->name);
 			r = r->edge_next;
 		}
 		printf("NULL\n");
@@ -44,16 +44,11 @@ int		main(int argc, char **argv)
 	t_lemin	*lem;
 
 	lem = parse_lem();
+	bfs(lem);
+	if (!(lem->end->visited))
+		error();
 	bhandari(lem);
 //	print_graph(lem->graph);
-//	ft_printf("BFS:\n");
-	bfs(lem);
-//	ft_printf("\n");
-	ft_printf("END visited?\n");
-	if (lem->end->visited)
-		ft_printf("YES\n\n");
-	else
-		ft_printf("NO\n\n");
 	free_lemin(&lem);
 	return (0);
 }

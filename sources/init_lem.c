@@ -20,7 +20,6 @@ t_lemin	*init_lem(void)
 		return (NULL);
 	lem->ants = 0;
 	lem->rooms = 0;
-	lem->edges = 0;
 	lem->start = NULL;
 	lem->end = NULL;
 	lem->graph = NULL;

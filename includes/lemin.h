@@ -32,11 +32,11 @@ typedef struct		s_room
 
 typedef struct		s_edge
 {
-	int				id;
 	int				locked;
 	int				weight;
-	t_room			*next;
-	t_room			*prev;
+	t_room			*to;
+	t_room			*out;
+	struct s_edge	*same_edge;
 	struct s_edge	*edge_next;
 }					t_edge;
 
@@ -44,6 +44,8 @@ typedef struct		s_path
 {
 	int				length;
 	t_edge			*edge;
+	t_room			*belongs_to;
+	struct s_path	*path;
 	struct s_path	*next_path;
 }					t_path;
 
@@ -51,7 +53,6 @@ typedef struct		s_lemin
 {
 	int				ants;
 	int				rooms;
-	int				edges;
 	t_room			*start;
 	t_room			*end;
 	t_room			*graph;
@@ -71,7 +72,7 @@ void				add_new_room(t_lemin *lem, t_room *room, int flag);
 */
 
 void				add_edge(t_lemin *lem, char *one, char *two);
-t_edge				*new_edge(t_room *src, t_room *dst, int id);
+t_edge				*new_edge(t_room *src, t_room *dst);
 
 /*
 ** init_lem.c
@@ -125,7 +126,8 @@ int					check_number(char *str);
 **	path.c
 */
 
-t_path				*init_path(void);
+t_path				*init_path(t_room *room);
+void				add_path(t_room *room, t_path *new);
 void				search_path(t_lemin *lem);
 void				print_path(t_lemin *lem);
 

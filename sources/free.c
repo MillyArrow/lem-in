@@ -27,8 +27,8 @@ void	free_arr(char **str)
 
 void	free_edge(t_edge **edge)
 {
-	(*edge)->next = NULL;
-	(*edge)->prev = NULL;
+	(*edge)->to = NULL;
+	(*edge)->out = NULL;
 	while ((*edge)->edge_next)
 		free_edge(&((*edge)->edge_next));
 	ft_memdel((void **)&(*edge));

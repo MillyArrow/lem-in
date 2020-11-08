@@ -32,6 +32,7 @@ SOURCES_LIST = checking_edges.c \
 	checking_rooms.c \
 	edge.c \
 	path.c \
+	bhandari.c \
 	bfs.c \
  	error.c \
 	free.c \
