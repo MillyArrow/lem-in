@@ -61,9 +61,7 @@ void	check_input(t_lemin *lem, char **str)
 		error();
 	x = ft_atoi(x_str);
 	y = ft_atoi(y_str);
-	if (search_coord(lem, x, y))
-		error();
-	if (search_name(lem, str[0]))
+	if (search_same(lem, x, y, str[0]))
 		error();
 }
 
@@ -77,7 +75,6 @@ void	add_rooom(t_lemin *lem, int check, char *line)
 {
 	char	**str;
 	char	*new_line;
-	int		res;
 	int		len;
 	t_room	*room;
 

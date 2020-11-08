@@ -57,6 +57,10 @@ void	add_edges_to_rooms(t_room *one, t_room *two)
 	to_two->same_edge = out_one;
 	out_one->same_edge = to_two;
 	out_two->same_edge = to_one;
+	to_one->oppos_edge = out_one;
+	to_two->oppos_edge = out_two;
+	out_one->oppos_edge = to_one;
+	out_two->oppos_edge = to_two;
 	add_edges_next(two, one, to_one);
 	add_edges_next(one, two, to_two);
 	add_edges_prev(two, one, out_two);
@@ -92,6 +96,7 @@ t_edge	*new_edge(t_room *src, t_room *dst)
 	new->locked = 0;
 	new->to = dst;
 	new->out = src;
+	new->oppos_edge = NULL;
 	new->same_edge = NULL;
 	new->edge_next = NULL;
 	return (new);

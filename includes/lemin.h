@@ -36,6 +36,7 @@ typedef struct		s_edge
 	int				weight;
 	t_room			*to;
 	t_room			*out;
+	struct s_edge	*oppos_edge;
 	struct s_edge	*same_edge;
 	struct s_edge	*edge_next;
 }					t_edge;
@@ -113,8 +114,8 @@ void				adding_edges(t_lemin *lem, char *line);
 ** search.c
 */
 
-int					search_coord(t_lemin *lem, int x, int y);
-int					search_name(t_lemin *lem, char *room_name);
+int					search_same(t_lemin *lem, int x, int y, char *name);
+int					search_names(t_lemin *lem, char *one, char *two);
 
 /*
 ** utils.c

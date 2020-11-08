@@ -47,13 +47,10 @@ void	add_new_room(t_lemin *lem, t_room *room, int flag)
 	room->room_next = lem->graph;
 	lem->graph = room;
 	if (flag == 1)
-	{
-		
 		lem->start = room;
-	}
 	else if (flag == 2)
 	{
-		room->path->length = 0;
+		room->path->length = 1;
 		lem->end = room;
 	}
 	lem->rooms += 1;

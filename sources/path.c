@@ -12,20 +12,7 @@
 
 #include "lemin.h"
 #include <stdio.h>
-/*
-void print_path(t_lemin *lem)
-{
-	t_room *room;
 
-	room = lem->start;
-	while (room != lem->end)
-	{
-		ft_printf("%s -> ", room->name);
-		room = room->path->edge->out;
-	}
-	ft_printf("%s\n", room->name);
-}
-*/
 void print_path(t_lemin *lem)
 {
 	t_path *pointer;
@@ -35,7 +22,7 @@ void print_path(t_lemin *lem)
 	path = lem->start->path->next_path;
 	while (path)
 	{
-		ft_printf("%s -> ", lem->start->name);
+		ft_printf("Length: %i [%s -> ", path->length, lem->start->name);
 		pointer = path->path;
 		room = pointer->belongs_to;
 		while (room != lem->end)
@@ -44,9 +31,10 @@ void print_path(t_lemin *lem)
 			pointer = pointer->path;
 			room = pointer->belongs_to;
 		}
-		ft_printf("%s\n", room->name);
+		ft_printf("%s]\n", room->name);
 		path = path->next_path;
 	}
+	ft_printf("\n");
 }
 
 void search_path(t_lemin *lem)
@@ -54,10 +42,12 @@ void search_path(t_lemin *lem)
 	t_room	*room;
 	t_edge *edge;
 	int		i;
+	int		changed;
 
 	i = 0;
 	while (i < lem->rooms - 1)
 	{
+		changed = 0;
 		room = lem->graph;
 		while (room != NULL)
 		{
@@ -69,17 +59,20 @@ void search_path(t_lemin *lem)
 			}
 			while (edge != NULL)
 			{
-				if (edge->out->path->length + edge->weight < room->path->length
-				&& edge->locked == 0)
+				if (edge->locked == 0 &&
+				edge->out->path->length + edge->weight < room->path->length)
 				{
 					room->path->length = edge->out->path->length + edge->weight;
 					room->path->path = edge->out->path;
 					room->path->edge = edge;
+					changed = 1;
 				}
 				edge = edge->edge_next;
 			}
 			room = room->room_next;
 		}
+		if (changed == 0)
+			break ;
 		i++;
 	}
 }

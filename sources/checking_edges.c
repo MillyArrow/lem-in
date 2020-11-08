@@ -50,7 +50,7 @@ void	adding_edges(t_lemin *lem, char *line)
 	str = ft_strsplit(line, '-');
 	if (str == NULL || str[0] == NULL || str[0][0] == 'L' || !str[1])
 		error_w_del(&line);
-	if (!search_name(lem, str[0]) || !search_name(lem, str[1]))
+	if (search_names(lem, str[0], str[1]) != 2)
 		error_w_del(&line);
 	add_edge(lem, str[0], str[1]);
 	free_arr(str);

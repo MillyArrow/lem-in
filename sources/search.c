@@ -13,10 +13,10 @@
 #include "lemin.h"
 
 /*
-** We search the graph whether there was a room with the same coordinates.
+** We search the graph whether there was a room with the same coordinates or name.
 */
 
-int	search_coord(t_lemin *lem, int x, int y)
+int	search_same(t_lemin *lem, int x, int y, char *name)
 {
 	t_room	*r;
 
@@ -25,25 +25,34 @@ int	search_coord(t_lemin *lem, int x, int y)
 	{
 		if (r->x == x && r->y == y)
 			return (1);
+		if (!ft_strcmp(name, r->name))
+			return (1);
 		r = r->room_next;
 	}
 	return (0);
 }
 
 /*
-** We search the graph whether there was a room with the same name.
+** We search whether the graph has two rooms to make edges between them.
 */
 
-int	search_name(t_lemin *lem, char *room_name)
+int	search_names(t_lemin *lem, char *one, char *two)
 {
 	t_room	*r;
+	int		i;
 
+	i = 0;
 	r = lem->graph;
 	while (r)
 	{
-		if (!ft_strcmp(room_name, r->name))
-			return (1);
+		if (!ft_strcmp(one, r->name))
+			i++;
+		else if (!ft_strcmp(two, r->name))
+			i++;
+		if (i == 2)
+			break ;
 		r = r->room_next;
 	}
-	return (0);
+	return (i);
 }
+
