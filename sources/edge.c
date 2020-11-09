@@ -96,6 +96,7 @@ t_edge	*new_edge(t_room *src, t_room *dst)
 	new->locked = 0;
 	new->to = dst;
 	new->out = src;
+	new->belongs_to_path = NULL;
 	new->oppos_edge = NULL;
 	new->same_edge = NULL;
 	new->edge_next = NULL;

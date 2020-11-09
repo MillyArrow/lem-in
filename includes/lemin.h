@@ -36,6 +36,7 @@ typedef struct		s_edge
 	int				weight;
 	t_room			*to;
 	t_room			*out;
+	struct s_path	*belongs_to_path;
 	struct s_edge	*oppos_edge;
 	struct s_edge	*same_edge;
 	struct s_edge	*edge_next;
@@ -47,7 +48,8 @@ typedef struct		s_path
 	t_edge			*edge;
 	t_room			*belongs_to;
 	struct s_path	*path;
-	struct s_path	*next_path;
+	struct s_path	*next_path_in_edge;
+	struct s_path	*next_path_in_room;
 }					t_path;
 
 typedef struct		s_lemin
@@ -89,6 +91,12 @@ void				error(void);
 void				error_w_del(char **line);
 
 /*
+** sort.c
+*/
+
+void				merge_sort(t_path **pathes);
+
+/*
 ** free.c
 */
 
@@ -128,7 +136,8 @@ int					check_number(char *str);
 */
 
 t_path				*init_path(t_room *room);
-void				add_path(t_room *room, t_path *new);
+void				add_path_room(t_room *room, t_path *new);
+void				add_path_edge(t_edge *edge, t_path *new);
 void				search_path(t_lemin *lem);
 void				print_path(t_lemin *lem);
 

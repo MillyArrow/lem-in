@@ -19,7 +19,7 @@ void print_path(t_lemin *lem)
 	t_path *path;
 	t_room *room;
 
-	path = lem->start->path->next_path;
+	path = lem->start->path->next_path_in_room;
 	while (path)
 	{
 		ft_printf("Length: %i [%s -> ", path->length, lem->start->name);
@@ -32,7 +32,7 @@ void print_path(t_lemin *lem)
 			room = pointer->belongs_to;
 		}
 		ft_printf("%s]\n", room->name);
-		path = path->next_path;
+		path = path->next_path_in_room;
 	}
 	ft_printf("\n");
 }
@@ -65,6 +65,8 @@ void search_path(t_lemin *lem)
 					room->path->length = edge->out->path->length + edge->weight;
 					room->path->path = edge->out->path;
 					room->path->edge = edge;
+					add_path_edge(edge, room->path);
+					add_path_edge(edge->same_edge, room->path);
 					changed = 1;
 				}
 				edge = edge->edge_next;
@@ -81,10 +83,16 @@ void search_path(t_lemin *lem)
 ** length = infinity = max_int - 1;
 */
 
-void	add_path(t_room *room, t_path *new)
+void	add_path_room(t_room *room, t_path *new)
 {
-	new->next_path = room->path;
+	new->next_path_in_room = room->path;
 	room->path = new;
+}
+
+void	add_path_edge(t_edge *edge, t_path *new)
+{
+	new->next_path_in_edge = edge->belongs_to_path;
+	edge->belongs_to_path = new;
 }
 
 t_path	*init_path(t_room *room)
@@ -97,6 +105,7 @@ t_path	*init_path(t_room *room)
 	path->belongs_to = room;
 	path->edge = NULL;
 	path->path = NULL;
-	path->next_path = NULL;
+	path->next_path_in_edge = NULL;
+	path->next_path_in_room = NULL;
 	return (path);
 }

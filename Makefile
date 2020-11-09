@@ -34,6 +34,7 @@ SOURCES_LIST = checking_edges.c \
 	path.c \
 	bhandari.c \
 	bfs.c \
+	sort.c \
  	error.c \
 	free.c \
 	init_lem.c \
