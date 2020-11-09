@@ -50,7 +50,8 @@ typedef struct		s_path
 	int				length;
 	t_edge			*edge;
 	t_room			*belongs_to;
-	struct s_path	*path;
+	struct s_path	*path_next;
+	struct s_path	*path_prev;
 	struct s_path	*next_path_in_edge;
 	struct s_path	*next_path_in_room;
 }					t_path;

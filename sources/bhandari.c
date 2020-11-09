@@ -42,63 +42,39 @@ void		lock_all_pathes(t_edge *edge)
 	}	
 }
 
-void change_paths(t_room *search_in, t_room *out, t_path **temp)
-{
-	t_path *path;
-	t_path *tmp;
-
-	path = search_in->path;
-	while (path && path->edge == NULL)
-		path = search_in->path->next_path_in_room;
-	while (path)
-	{
-		if (path->edge->out == out)
-		{
-			tmp = path->path->path;
-			path->edge->locked = 0;
-			path->path = *temp;
-			*temp = tmp;
-			break ;
-		}
-		path = path->next_path_in_room;
-	}
-}
-
-
 void delete_links(t_lemin *lem)
 {
 	t_path *pointer;
 	t_path *path;
 	t_path *temp_path;
-	t_room *room;
-	t_edge *edge;
 	t_path *temp;
 
 	path = 	lem->start->path->next_path_in_room;
 	while (path)
 	{
-		pointer = path->path;
-		room = pointer->belongs_to;
-		while (room != lem->end)
+		pointer = path->path_next;
+		while (pointer->belongs_to != lem->end)
 		{
 			temp = NULL;
-			edge = pointer->edge;
-			if (edge->locked == 1 && edge->oppos_edge->locked == 1)
+			if (pointer->edge->locked == 1 && pointer->edge->oppos_edge->locked == 1)
 			{
-				temp = pointer->path->path;
-				temp_path = pointer->edge->oppos_edge->belongs_to_path->path->path;
-				pointer->edge->oppos_edge->belongs_to_path->path = temp;
-				pointer->edge->oppos_edge->same_edge->belongs_to_path->path = temp;
-				pointer->path = temp_path;
-				pointer->edge->same_edge->belongs_to_path->path = temp_path;
-				edge->locked = 0;
-				edge->same_edge->locked = 0;
+				temp = pointer->path_next;
+				temp_path = pointer->edge->oppos_edge->belongs_to_path->path_next;
+				pointer->edge->locked = 0;
+				pointer->edge->same_edge->locked = 0;
+
+				pointer->path_prev->path_next = temp_path;
+				pointer->path_prev->edge->same_edge->belongs_to_path->path_next = temp_path;
+				pointer->edge->oppos_edge->belongs_to_path->path_next->path_prev = pointer->path_prev;
+
+				pointer->edge->oppos_edge->belongs_to_path->path_prev->path_next = temp;
+				pointer->edge->oppos_edge->same_edge->belongs_to_path->path_prev->path_next = temp;
+				temp->path_prev = pointer->edge->oppos_edge->belongs_to_path->path_prev;
 			}
 			if (temp != NULL)
 				pointer = temp;
 			else
-				pointer = pointer->path;
-			room = pointer->belongs_to;
+				pointer = pointer->path_next;
 		}
 		path = path->next_path_in_room;
 	}
@@ -110,13 +86,13 @@ int count_length(t_path *path)
 	t_path	*p;
 
 	count = 1;
-	p = path->path;
+	p = path->path_next;
 	while (p)
 	{
 		if (p->length == 0 || p->edge == NULL)
 			break ;
 		count += 1;
-		p = p->path;
+		p = p->path_next;
 	}
 	return (count);
 }
@@ -146,7 +122,7 @@ void		bhandari(t_lemin *le_min)
 		initialize_before(le_min);
 		bfs(le_min);
 	}
-//	print_path(le_min); // to delete
+	print_path(le_min); // to delete
 	delete_links(le_min);
 	recount(le_min->start->path);
 	merge_sort(&(le_min->start->path->next_path_in_room));

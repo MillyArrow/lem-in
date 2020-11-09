@@ -37,6 +37,7 @@ SOURCES_LIST = checking_edges.c \
 	sort.c \
  	error.c \
 	free.c \
+	solver.c \
 	init_lem.c \
 	main.c \
 	parse.c \
