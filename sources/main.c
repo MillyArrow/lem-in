@@ -47,7 +47,7 @@ int		main(int argc, char **argv)
 	bfs(lem);
 	if (!(lem->end->visited))
 		error();
-	bhandari(lem);
+	solver(lem);
 //	print_graph(lem->graph);
 	free_lemin(&lem);
 	return (0);

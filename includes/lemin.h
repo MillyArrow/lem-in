@@ -16,14 +16,17 @@
 # include <stdlib.h>
 # include "ft_printf.h"
 # include "libft.h"
+# include <stdbool.h>
 # include "queue.h"
 
 typedef struct		s_room
 {
-	short			visited;
+	bool			occupied;
 	char			*name;
+	short			visited;
 	int				x;
 	int				y;
+	int 			ant;
 	struct s_path	*path;
 	struct s_edge  	*edge_next;
 	struct s_edge	*edge_prev;
@@ -32,7 +35,7 @@ typedef struct		s_room
 
 typedef struct		s_edge
 {
-	int				locked;
+	bool			locked;
 	int				weight;
 	t_room			*to;
 	t_room			*out;
@@ -55,6 +58,8 @@ typedef struct		s_path
 typedef struct		s_lemin
 {
 	int				ants;
+	int 			curr_ant;
+	int 			ants_on_road;
 	int				rooms;
 	t_room			*start;
 	t_room			*end;
@@ -154,4 +159,5 @@ void				print_graph(t_room *graph);
 void					bfs(t_lemin *lem_in);
 
 void					bhandari(t_lemin *le_min);
+void					solver(t_lemin *le_min);
 #endif

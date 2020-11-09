@@ -67,6 +67,7 @@ void				bfs(t_lemin *lem_in)
 	t_queue 		*queue;
 	t_room			*room_tmp;
 
+//Здесь моет быть утечка если память под очередь не выделится
 	if(!(queue = malloc_queue()))
 		return ;
 	room_tmp = NULL;

@@ -19,6 +19,8 @@ t_lemin	*init_lem(void)
 	if (!(lem = (t_lemin*)ft_memalloc(sizeof(t_lemin))))
 		return (NULL);
 	lem->ants = 0;
+	lem->curr_ant = 1;
+	lem->ants_on_road = 0;
 	lem->rooms = 0;
 	lem->start = NULL;
 	lem->end = NULL;

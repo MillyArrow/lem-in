@@ -139,7 +139,6 @@ void		bhandari(t_lemin *le_min)
 	lock_all_pathes(le_min->start->path->edge);
 	initialize_before(le_min);
 	bfs(le_min);
-
 	while (le_min->end->visited)
 	{
 		search_path(le_min);
