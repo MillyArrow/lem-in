@@ -138,11 +138,15 @@ void 			move_ant_on_road(t_lemin *le_min)
 		if (curr_room->ant != 0)
 		{
 			end_room->ant = curr_room->ant;
+			--le_min->ants_on_road;
 			ft_printf("L%d-%s ", end_room->ant, end_room->name);
 		}
 		while(curr_room != le_min->start)
 		{
-			prev_room = curr_room->path->next_path_in_room->path_prev->belongs_to;
+			if (curr_room->path->next_path_in_room->path_prev)
+				prev_room = curr_room->path->next_path_in_room->path_prev->belongs_to;
+			else
+				break ;
 			curr_room->ant = prev_room->ant;
 			if (curr_room->ant != 0)
 				ft_printf("L%d-%s ", curr_room->ant, curr_room->name);
@@ -177,7 +181,7 @@ void			solver(t_lemin *le_min)
 	while(le_min->ants || le_min->ants_on_road && a--)
 	{
 		ft_printf("--------%d--------\n", count++);
-		if (count == 5)
+		if (count == 4)
 			1;
 		room_cleaning(le_min);
 		if (le_min->ants_on_road)
