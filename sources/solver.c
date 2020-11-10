@@ -53,7 +53,7 @@ void			move_ant_from_start(t_lemin *le_min, t_queue *free_rooms)
 	{
 		if (best_way(le_min->ants, paths, le_min->start->path->next_path_in_room) && !paths->edge->out->occupied)
 		{
-			queue_add_end(free_rooms, paths->path_next->edge->out);
+			queue_add_end(free_rooms, paths->edge->out);
 			move_for_start(le_min, paths);
 		}
 		paths = paths->next_path_in_room;
@@ -199,21 +199,20 @@ void			solver(t_lemin *le_min)
 {
 	t_queue		*free_rooms;
 
-	//Здесь моет быть утечка если память под очередь не выделится
 	if (!(free_rooms = malloc_queue()))
-		return ;
+		error();
 	bhandari(le_min);
+
 	int count = 1;
-	int a = 150;
+	int a = 10;
 	while((le_min->ants || le_min->ants_on_road) && a--)
 	{
 		ft_printf("--------%d--------\n", count++);
-//		if (count == 4)
-//			1;
 		room_cleaning(le_min);
 		if (le_min->ants_on_road)
 			move_ant_on_road(le_min);
 		move_ant_from_start(le_min, free_rooms);
 		ft_printf("\n");
 	}
+	free_queue(&free_rooms);
 }

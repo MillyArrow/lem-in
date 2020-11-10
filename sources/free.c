@@ -29,14 +29,30 @@ void	free_edge(t_edge **edge)
 {
 	(*edge)->to = NULL;
 	(*edge)->out = NULL;
+	(*edge)->belongs_to_path = NULL;
+	(*edge)->oppos_edge = NULL;
+	(*edge)->same_edge = NULL;
 	while ((*edge)->edge_next)
 		free_edge(&((*edge)->edge_next));
 	ft_memdel((void **)&(*edge));
 }
 
+void	free_path(t_path **path)
+{
+	(*path)->edge = NULL;
+	(*path)->belongs_to = NULL;
+	(*path)->path_next = NULL;
+	(*path)->path_prev = NULL;
+	while ((*path)->next_path_in_room)
+		free_path(&((*path)->next_path_in_room));
+	ft_memdel((void **)&(*path));
+}
+
 void	free_graph(t_room **graph)
 {
 	ft_strdel(&((*graph)->name));
+	if ((*graph)->path)
+		free_path(&(*graph)->path);
 	ft_memdel((void **)&((*graph)->path));
 	if ((*graph)->edge_next)
 		free_edge(&((*graph)->edge_next));

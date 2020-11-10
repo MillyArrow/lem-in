@@ -32,5 +32,6 @@ t_node					*malloc_node(void *item);
 void					queue_add_end(t_queue *queue, void *item);
 void					*queue_del_top(t_queue *queue);
 int 					is_empty(t_queue *queue);
+void 					free_queue(t_queue **queue);
 t_queue					*malloc_queue(void);
 #endif

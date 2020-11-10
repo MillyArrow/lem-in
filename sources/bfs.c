@@ -78,7 +78,7 @@ void				bfs(t_lemin *lem_in)
 		room_tmp = (t_room *)queue_del_top(queue);
 		room_tmp->visited = 1;
 	}
-	free(queue);
+	free_queue(&queue);
 }
 /*
  * Обход графа в ширину.
