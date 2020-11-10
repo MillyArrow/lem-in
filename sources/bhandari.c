@@ -58,6 +58,7 @@ void delete_links(t_lemin *lem)
 			temp = NULL;
 			if (pointer->edge->locked == 1 && pointer->edge->oppos_edge->locked == 1)
 			{
+				ft_printf("DELETE LINKS\n");
 				temp = pointer->path_next;
 				temp_path = pointer->edge->oppos_edge->belongs_to_path->path_next;
 				pointer->edge->locked = 0;
@@ -104,7 +105,7 @@ void recount(t_path *paths)
 	path = paths->next_path_in_room;
 	while (path)
 	{
-		path->length = count_length(path) + 1;
+		path->length = count_length(path);
 		path = path->next_path_in_room;
 	}
 }

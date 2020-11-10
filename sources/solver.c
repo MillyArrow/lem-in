@@ -51,10 +51,9 @@ void			move_ant_from_start(t_lemin *le_min, t_queue *free_rooms)
 	paths = le_min->start->path->next_path_in_room;
 	while (paths && le_min->ants)
 	{
-		if (best_way(le_min->ants, paths, le_min->start->path) && !paths->edge->out->occupied)
+		if (best_way(le_min->ants, paths, le_min->start->path->next_path_in_room) && !paths->edge->out->occupied)
 		{
-			queue_add_end(free_rooms, paths->path_next->belongs_to\
-			->path->next_path_in_room->path_next->belongs_to);
+			queue_add_end(free_rooms, paths->path_next->edge->out);
 			move_for_start(le_min, paths);
 		}
 		paths = paths->next_path_in_room;
@@ -123,6 +122,7 @@ t_queue 			*get_free_rooms(t_node *node)
 	*free_rooms = tmp_que;
 }*/
 
+/*
 void 			move_ant_on_road(t_lemin *le_min)
 {
 	t_path		*path;
@@ -154,6 +154,33 @@ void 			move_ant_on_road(t_lemin *le_min)
 		}
 		path = path->next_path_in_room;
 	}
+} */
+
+t_path 			*move_ants_rec(t_path *curr, t_room *end)
+{
+	t_room	*room;
+
+	if (curr->belongs_to->ant == 0 || curr->belongs_to == end)
+		return (curr);
+	room = move_ants_rec(curr->path_next, end)->belongs_to;
+	room->ant = curr->belongs_to->ant;
+	ft_printf("L%d-%s ", room->ant, room->name);
+	curr->belongs_to->ant = 0;
+	return (curr);
+}
+
+void 			move_ant_on_road(t_lemin *le_min) {
+	t_path *path;
+	t_path *curr;
+
+	path = le_min->start->path->next_path_in_room;
+	while (path) {
+		curr = path;
+		while (curr->path_next->belongs_to != le_min->end && curr->path_next->belongs_to->ant == 0)
+			curr = curr->path_next;
+		move_ants_rec(curr->path_next, le_min->end);
+		path = path->next_path_in_room;
+	}
 }
 
 void 			room_cleaning(t_lemin *le_min)
@@ -177,12 +204,12 @@ void			solver(t_lemin *le_min)
 		return ;
 	bhandari(le_min);
 	int count = 1;
-	int a = 10;
-	while(le_min->ants || le_min->ants_on_road && a--)
+	int a = 150;
+	while((le_min->ants || le_min->ants_on_road) && a--)
 	{
 		ft_printf("--------%d--------\n", count++);
-		if (count == 4)
-			1;
+//		if (count == 4)
+//			1;
 		room_cleaning(le_min);
 		if (le_min->ants_on_road)
 			move_ant_on_road(le_min);
