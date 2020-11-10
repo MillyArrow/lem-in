@@ -7,16 +7,16 @@
  На каждом шаге мы будем перебирать пути по их длине в порядке
  возрастания и принимать решение - двигать муравья по этому пути или нет.*/
 
-int 			best_way(int ants, t_path *path)
+int 			best_way(int ants, t_path *path, t_path *start_path)
 {
 	int			best_length;
 
 	best_length = 0;
-	while (path)
+	while (path != start_path)
 	{
-		if (path->next_path_in_room)
-			best_length += path->length - path->next_path_in_room->length;
-		path = path->next_path_in_room;
+		if (start_path)
+			best_length += path->length - start_path->next_path_in_room->length;
+		start_path = start_path->next_path_in_room;
 	}
 	if (ants > best_length)
 		return (TRUE);
@@ -31,8 +31,8 @@ void 			move_for_start(t_lemin *le_min, t_path *path)
 	t_room 		*curr_room;
 
 	curr_ant = le_min->curr_ant;
-	room_name = path->edge->out->name;
-	curr_room = path->edge->out;
+	curr_room = path->path_next->belongs_to;
+	room_name = curr_room->name;
 	if (curr_room != le_min->end)
 	{
 		curr_room->occupied = TRUE;
@@ -47,48 +47,108 @@ void 			move_for_start(t_lemin *le_min, t_path *path)
 void			move_ant_from_start(t_lemin *le_min, t_queue *free_rooms)
 {
 	t_path		*paths;
-	int 		sum;
 
-	sum = 0;
 	paths = le_min->start->path->next_path_in_room;
 	while (paths && le_min->ants)
 	{
-		sum += paths->length;
-		if (paths->length - sum > 0 && !paths->edge->out->occupied)
+		if (best_way(le_min->ants, paths, le_min->start->path) && !paths->edge->out->occupied)
 		{
-			queue_add_end(free_rooms, paths->path_next->edge->to);
+			queue_add_end(free_rooms, paths->path_next->belongs_to\
+			->path->next_path_in_room->path_next->belongs_to);
 			move_for_start(le_min, paths);
 		}
 		paths = paths->next_path_in_room;
 	}
 }
 
-void			move_ant_on_road(t_lemin *le_min, t_queue *free_rooms)
+//CHECK HERE
+//
+t_queue 			*get_free_rooms(t_node *node)
+{
+	t_queue *free_rooms;
+	t_room	*room;
+
+	if (!(free_rooms = malloc_queue()))
+		return (NULL);
+	while(node)
+	{
+		room = node->room;
+		if (room->path->next_path_in_room->path_next)
+			queue_add_end(free_rooms, room->path->next_path_in_room->path_next->belongs_to);
+		node = node->next;
+	}
+	return (free_rooms);
+}
+
+/*void			move_ant_on_road(t_lemin *le_min, t_queue **free_rooms)
 {
 	t_node		*node;
 	t_room 		*curr_room;
 	t_room 		*prev_room;
+	t_queue		*tmp_que;
 
-	node = free_rooms->head;
+	node = (*free_rooms)->head;
+	tmp_que = get_free_rooms(node);
 	while(node)
 	{
-		prev_room = node->room;
-		curr_room = prev_room->path->next_path_in_room->edge->out;
+		curr_room = node->room;
+		prev_room = curr_room->path->next_path_in_room->path_prev->belongs_to;
+		if (prev_room == le_min->end)
+		{
+			node = node->next;
+			continue ;
+		}
+		prev_room->occupied = true;
 		if (curr_room == le_min->end)
 			--le_min->ants_on_road;
 		while(prev_room)
 		{
-			curr_room->ant = prev_room->ant;
-			ft_printf("L%d-%s ", curr_room->ant, curr_room->name);
-			curr_room = prev_room;
-			if (prev_room->path->next_path_in_room->edge->edge_next)
-				prev_room = prev_room->path->next_path_in_room->edge->edge_next->out;
+			if (prev_room->occupied || curr_room == le_min->end)
+			{
+				curr_room->ant = prev_room->ant;
+				curr_room->occupied = true;
+				prev_room->occupied = false;
+				ft_printf("L%d-%s ", curr_room->ant, curr_room->name);
+				curr_room = prev_room;
+			}
+			if (prev_room->path->next_path_in_room->path_prev->belongs_to)
+				prev_room = prev_room->path->next_path_in_room->path_prev->belongs_to;
 			else
 				break ;
 			if (prev_room == le_min->start)
 				break ;
 		}
 		node = node->next;
+	}
+	*free_rooms = tmp_que;
+}*/
+
+void 			move_ant_on_road(t_lemin *le_min)
+{
+	t_path		*path;
+	t_room		*curr_room;
+	t_room		*prev_room;
+	t_room		*end_room;
+
+	path = le_min->end->path->next_path_in_room;
+	end_room = le_min->end;
+	while(path)
+	{
+		curr_room = path->path_prev->belongs_to;
+		if (curr_room->ant != 0)
+		{
+			end_room->ant = curr_room->ant;
+			ft_printf("L%d-%s ", end_room->ant, end_room->name);
+		}
+		while(curr_room != le_min->start)
+		{
+			prev_room = curr_room->path->next_path_in_room->path_prev->belongs_to;
+			curr_room->ant = prev_room->ant;
+			if (curr_room->ant != 0)
+				ft_printf("L%d-%s ", curr_room->ant, curr_room->name);
+			curr_room = prev_room;
+		}
+		path = path->next_path_in_room;
 	}
 }
 
@@ -112,10 +172,17 @@ void			solver(t_lemin *le_min)
 	if (!(free_rooms = malloc_queue()))
 		return ;
 	bhandari(le_min);
-	//while(le_min->ants || le_min->ants_on_road)
-	room_cleaning(le_min);
-//	move_ant_from_start(le_min, free_rooms);
-	ft_printf("\n");
-//	move_ant_on_road(le_min, free_rooms);
-	ft_printf("\n");
+	int count = 1;
+	int a = 10;
+	while(le_min->ants || le_min->ants_on_road && a--)
+	{
+		ft_printf("--------%d--------\n", count++);
+		if (count == 5)
+			1;
+		room_cleaning(le_min);
+		if (le_min->ants_on_road)
+			move_ant_on_road(le_min);
+		move_ant_from_start(le_min, free_rooms);
+		ft_printf("\n");
+	}
 }
