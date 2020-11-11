@@ -35,6 +35,7 @@ SOURCES_LIST = checking_edges.c \
 	bhandari.c \
 	bfs.c \
 	sort.c \
+	print.c \
  	error.c \
 	free.c \
 	free_queue.c \

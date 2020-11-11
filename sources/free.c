@@ -42,7 +42,6 @@ void	free_path(t_path **path)
 	(*path)->edge = NULL;
 	(*path)->belongs_to = NULL;
 	(*path)->path_next = NULL;
-	(*path)->path_prev = NULL;
 	while ((*path)->next_path_in_room)
 		free_path(&((*path)->next_path_in_room));
 	ft_memdel((void **)&(*path));

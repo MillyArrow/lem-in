@@ -22,6 +22,7 @@
 typedef struct		s_room
 {
 	bool			occupied;
+	bool			locked;
 	char			*name;
 	short			visited;
 	int				x;
@@ -51,7 +52,6 @@ typedef struct		s_path
 	t_edge			*edge;
 	t_room			*belongs_to;
 	struct s_path	*path_next;
-	struct s_path	*path_prev;
 	struct s_path	*next_path_in_edge;
 	struct s_path	*next_path_in_room;
 }					t_path;
@@ -87,7 +87,7 @@ t_edge				*new_edge(t_room *src, t_room *dst);
 ** add_edge.c
 */
 
-void			add_edges_to_rooms(t_room *one, t_room *two);
+void				add_edges_to_rooms(t_room *one, t_room *two);
 
 /*
 ** init_lem.c

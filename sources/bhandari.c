@@ -40,6 +40,7 @@ void		lock_all_pathes(t_edge *edge)
 			{
 				ed->locked = 1;
 				ed->same_edge->locked = 1;
+				ed->to->locked = 1;
 				break ;
 			}
 			ed = ed->edge_next;
@@ -48,47 +49,37 @@ void		lock_all_pathes(t_edge *edge)
 	}
 }
 
-t_path		*switch_links(t_path *pointer)
+t_path		*switch_links(t_path *pointer, t_path *pointer_prev)
 {
-	t_path	*temp_path;
-	t_path	*temp;
+	t_path	*two;
 
-	temp = NULL;
-	temp_path = NULL;
-	temp = pointer->path_next;
-	temp_path = pointer->edge->oppos_edge->belongs_to_path->path_next;
-	pointer->edge->locked = 0;
-	pointer->edge->same_edge->locked = 0;
-	pointer->path_prev->path_next = temp_path;
-	pointer->path_prev->edge->same_edge->belongs_to_path->\
-				path_next = temp_path;
-	pointer->edge->oppos_edge->belongs_to_path->path_next->\
-				path_prev = pointer->path_prev;
-	pointer->edge->oppos_edge->belongs_to_path->path_prev->\
-				path_next = temp;
-	pointer->edge->oppos_edge->same_edge->belongs_to_path->\
-				path_prev->path_next = temp;
-	temp->path_prev = pointer->edge->oppos_edge->belongs_to_path->\
-				path_prev;
-	return (temp);
+	two = pointer->edge->oppos_edge->belongs_to_path->path_next;
+	pointer_prev->path_next = two;
+	pointer_prev->edge->same_edge->belongs_to_path->path_next = two;
+	return (two);
 }
 
 void		delete_links(t_lemin *lem)
 {
 	t_path	*pointer;
 	t_path	*path;
+	t_path	*pointer_prev;
 
 	path = lem->start->path->next_path_in_room;
 	while (path)
 	{
+		pointer_prev = path;
 		pointer = path->path_next;
 		while (pointer->belongs_to != lem->end)
 		{
 			if (pointer->edge->locked == 1 &&
 			pointer->edge->oppos_edge->locked == 1)
-				pointer = switch_links(pointer);
+				pointer = switch_links(pointer, pointer_prev);
 			else
+			{
+				pointer_prev = pointer;
 				pointer = pointer->path_next;
+			}
 		}
 		path = path->next_path_in_room;
 	}

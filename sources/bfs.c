@@ -21,7 +21,8 @@ static void			adj_list(t_queue *queue)
 	edge_next = room_tmp->edge_prev;
 	while (edge_next)
 	{
-		if (edge_next->out && edge_next->locked == 0)
+		if (edge_next->out && edge_next->locked == 0 &&
+			edge_next->out->locked == 0)
 		{
 			room_tmp = edge_next->out;
 			if (room_tmp->visited == 0)

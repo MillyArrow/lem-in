@@ -19,12 +19,12 @@ void			search_path_help(t_room *room, int *changed)
 	edge = room->edge_prev;
 	while (edge != NULL)
 	{
-		if (edge->locked == 0 &&
+		if (edge->locked == 0 && edge->same_edge->locked == 0 &&
+			edge->out->locked == 0 &&
 			edge->out->path->length + edge->weight < room->path->length)
 		{
 			room->path->length = edge->out->path->length + edge->weight;
 			room->path->path_next = edge->out->path;
-			room->path->path_next->path_prev = room->path;
 			room->path->edge = edge;
 			add_path_edge(edge, room->path);
 			add_path_edge(edge->same_edge, room->path);
@@ -87,7 +87,6 @@ t_path			*init_path(t_room *room)
 	path->belongs_to = room;
 	path->edge = NULL;
 	path->path_next = NULL;
-	path->path_prev = NULL;
 	path->next_path_in_edge = NULL;
 	path->next_path_in_room = NULL;
 	return (path);
