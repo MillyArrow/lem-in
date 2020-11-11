@@ -11,36 +11,32 @@
 /* ************************************************************************** */
 
 #include "lemin.h"
-#include <stdio.h>
 
-void			print_path(t_lemin *lem)
+void			search_path_help(t_room *room, int *changed)
 {
-	t_path		*pointer;
-	t_path		*path;
-	t_room		*room;
+	t_edge		*edge;
 
-	path = lem->start->path->next_path_in_room;
-	while (path)
+	edge = room->edge_prev;
+	while (edge != NULL)
 	{
-		ft_printf("Length: %i [%s -> ", path->length, lem->start->name);
-		pointer = path->path_next;
-		room = pointer->belongs_to;
-		while (room != lem->end)
+		if (edge->locked == 0 &&
+			edge->out->path->length + edge->weight < room->path->length)
 		{
-			ft_printf("%s -> ", room->name);
-			pointer = pointer->path_next;
-			room = pointer->belongs_to;
+			room->path->length = edge->out->path->length + edge->weight;
+			room->path->path_next = edge->out->path;
+			room->path->path_next->path_prev = room->path;
+			room->path->edge = edge;
+			add_path_edge(edge, room->path);
+			add_path_edge(edge->same_edge, room->path);
+			*changed = 1;
 		}
-		ft_printf("%s]\n", room->name);
-		path = path->next_path_in_room;
+		edge = edge->edge_next;
 	}
-	ft_printf("\n");
 }
 
 void			search_path(t_lemin *lem)
 {
 	t_room		*room;
-	t_edge		*edge;
 	int			i;
 	int			changed;
 
@@ -51,27 +47,12 @@ void			search_path(t_lemin *lem)
 		room = lem->graph;
 		while (room != NULL)
 		{
-			edge = room->edge_prev;
 			if (room == lem->end)
 			{
 				room = room->room_next;
 				continue ;
 			}
-			while (edge != NULL)
-			{
-				if (edge->locked == 0 &&
-				edge->out->path->length + edge->weight < room->path->length)
-				{
-					room->path->length = edge->out->path->length + edge->weight;
-					room->path->path_next = edge->out->path;
-					room->path->path_next->path_prev = room->path;
-					room->path->edge = edge;
-					add_path_edge(edge, room->path);
-					add_path_edge(edge->same_edge, room->path);
-					changed = 1;
-				}
-				edge = edge->edge_next;
-			}
+			search_path_help(room, &changed);
 			room = room->room_next;
 		}
 		if (changed == 0)

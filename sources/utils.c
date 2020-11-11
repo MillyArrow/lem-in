@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-int	check_number(char *str)
+int			check_number(char *str)
 {
 	int i;
 
@@ -24,4 +24,33 @@ int	check_number(char *str)
 		i++;
 	}
 	return (1);
+}
+
+static int	count_length(t_path *path)
+{
+	int		count;
+	t_path	*p;
+
+	count = 1;
+	p = path->path_next;
+	while (p)
+	{
+		if (p->length == 0 || p->edge == NULL)
+			break ;
+		count += 1;
+		p = p->path_next;
+	}
+	return (count);
+}
+
+void		recount(t_path *paths)
+{
+	t_path	*path;
+
+	path = paths->next_path_in_room;
+	while (path)
+	{
+		path->length = count_length(path);
+		path = path->next_path_in_room;
+	}
 }

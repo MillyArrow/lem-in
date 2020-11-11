@@ -11,33 +11,6 @@
 /* ************************************************************************** */
 
 #include "lemin.h"
-#include <stdio.h>
-
-/*
-** Needed for the debug. Delete later.
-*/
-
-void	print_graph(t_room *graph)
-{
-	t_room	*p;
-	t_edge	*r;
-
-	p = graph;
-	r = NULL;
-	while (p)
-	{
-		r = p->edge_next;
-		printf("%s -> ", p->name);
-		while (r)
-		{
-			printf("%s -> ", r->to->name);
-			r = r->edge_next;
-		}
-		printf("NULL\n");
-		p = p->room_next;
-	}
-	printf("\n");
-}
 
 int		main(int argc, char **argv)
 {
@@ -48,7 +21,6 @@ int		main(int argc, char **argv)
 	if (!(lem->end->visited))
 		error();
 	solver(lem);
-//	print_graph(lem->graph);
 	free_lemin(&lem);
 	return (0);
 }

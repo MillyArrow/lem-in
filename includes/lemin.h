@@ -84,10 +84,22 @@ void				add_edge(t_lemin *lem, char *one, char *two);
 t_edge				*new_edge(t_room *src, t_room *dst);
 
 /*
+** add_edge.c
+*/
+
+void			add_edges_to_rooms(t_room *one, t_room *two);
+
+/*
 ** init_lem.c
 */
 
 t_lemin				*init_lem(void);
+
+/*
+** move_ants.c
+*/
+
+void				move_ant_on_road(t_lemin *le_min);
 
 /*
 ** error.c
@@ -136,6 +148,7 @@ int					search_names(t_lemin *lem, char *one, char *two);
 */
 
 int					check_number(char *str);
+void				recount(t_path *paths);
 
 /*
 **	path.c

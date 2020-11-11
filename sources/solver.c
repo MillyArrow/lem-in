@@ -40,23 +40,26 @@ void			move_for_start(t_lemin *le_min, t_path *path)
 	room_name = curr_room->name;
 	if (curr_room != le_min->end)
 	{
+		curr_room->occupied = TRUE;
 		curr_room->ant = curr_ant;
-		++le_min->ants_on_road;
+		(le_min->ants_on_road)++;
 	}
-	++le_min->curr_ant;
-	--le_min->ants;
+	(le_min->curr_ant)++;
+	(le_min->ants)--;
 	ft_printf("L%d-%s ", curr_ant, room_name);
 }
 
 void			move_ant_from_start(t_lemin *le_min, t_queue *free_rooms)
 {
 	t_path		*paths;
+	int			ants;
 
 	paths = le_min->start->path->next_path_in_room;
 	while (paths && le_min->ants)
 	{
-		if (best_way(le_min->ants, paths, le_min->start->path->\
-		next_path_in_room) && !paths->edge->out->occupied)
+		ants = le_min->ants;
+		if (best_way(ants, paths, le_min->start->path->next_path_in_room)
+					&& !paths->edge->out->occupied)
 		{
 			queue_add_end(free_rooms, paths->edge->out);
 			move_for_start(le_min, paths);
@@ -65,54 +68,23 @@ void			move_ant_from_start(t_lemin *le_min, t_queue *free_rooms)
 	}
 }
 
-t_path			*move_ants_rec(t_path *curr, t_room *end, t_lemin *le_min)
-{
-	t_room	*room;
-
-	if (curr->belongs_to->ant == 0)
-		return (curr);
-	else if (curr->belongs_to == end)
-	{
-		--le_min->ants_on_road;
-		return (curr);
-	}
-	room = move_ants_rec(curr->path_next, end, le_min)->belongs_to;
-	room->ant = curr->belongs_to->ant;
-	ft_printf("L%d-%s ", room->ant, room->name);
-	curr->belongs_to->ant = 0;
-	return (curr);
-}
-
-void			move_ant_on_road(t_lemin *le_min)
-{
-	t_path *path;
-	t_path *curr;
-
-	path = le_min->start->path->next_path_in_room;
-	while (path)
-	{
-		curr = path;
-		while (curr->path_next->belongs_to != le_min->end && \
-		curr->path_next->belongs_to->ant == 0)
-			curr = curr->path_next;
-		move_ants_rec(curr->path_next, le_min->end, le_min);
-		path = path->next_path_in_room;
-	}
-}
-
 void			solver(t_lemin *le_min)
 {
 	t_queue		*free_rooms;
+	int			first;
 
 	if (!(free_rooms = malloc_queue()))
 		error();
+	first = 0;
 	bhandari(le_min);
-	while (le_min->ants > 0 || le_min->ants_on_road > 0)
+	move_ant_from_start(le_min, free_rooms);
+	while (le_min->ants_on_road > 0)
 	{
-		if (le_min->ants_on_road)
+		if (first && le_min->ants_on_road)
 			move_ant_on_road(le_min);
 		move_ant_from_start(le_min, free_rooms);
 		ft_printf("\n");
+		first = 1;
 	}
 	free_queue(&free_rooms);
 }
