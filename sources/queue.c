@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   queue.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlintill <rlintill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marrow <marrow@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:45:23 by rlintill          #+#    #+#             */
-/*   Updated: 2020/10/13 13:37:24 by rlintill         ###   ########.fr       */
+/*   Updated: 2020/11/11 05:04:22 by marrow           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 t_node			*malloc_node(void *item)
 {
-	t_node	*node;
+	t_node		*node;
 
 	if (!(node = (t_node*)ft_memalloc(sizeof(t_node))))
 		return (NULL);
@@ -29,7 +29,7 @@ t_node			*malloc_node(void *item)
 
 t_queue			*malloc_queue(void)
 {
-	t_queue 	*queue;
+	t_queue		*queue;
 
 	if (!(queue = (t_queue*)ft_memalloc(sizeof(t_queue))))
 		return (NULL);
@@ -38,26 +38,25 @@ t_queue			*malloc_queue(void)
 	return (queue);
 }
 
-void 			free_node(t_node **node)
+void			free_node(t_node **node)
 {
 	(*node)->room = NULL;
-	while((*node)->next)
+	while ((*node)->next)
 		free_node(&((*node)->next));
 	ft_memdel((void**)&(*node));
 }
 
-void 			free_queue(t_queue **queue)
+void			free_queue(t_queue **queue)
 {
 	if ((*queue)->head)
 		free_node(&((*queue)->head));
 	(*queue)->tail = NULL;
 	ft_memdel((void**)&(*queue));
-
 }
 
 void			queue_add_end(t_queue *queue, void *item)
 {
-	t_node	*new_node;
+	t_node		*new_node;
 
 	if (!(new_node = malloc_node(item)))
 		return ;
@@ -75,8 +74,8 @@ void			queue_add_end(t_queue *queue, void *item)
 
 void			*queue_del_top(t_queue *queue)
 {
-	t_node			*tmp;
-	void			*item;
+	t_node		*tmp;
+	void		*item;
 
 	tmp = queue->head;
 	if (tmp == NULL)
@@ -89,10 +88,10 @@ void			*queue_del_top(t_queue *queue)
 	return (item);
 }
 
-int 			is_empty(t_queue *queue)
+int				is_empty(t_queue *queue)
 {
 	if (queue->head == NULL && queue->tail == NULL)
-		return(TRUE);
+		return (TRUE);
 	else
-		return(FALSE);
+		return (FALSE);
 }

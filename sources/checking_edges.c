@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking_edges.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlintill <rlintill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marrow <marrow@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 12:45:23 by rlintill          #+#    #+#             */
-/*   Updated: 2020/10/27 13:37:24 by rlintill         ###   ########.fr       */
+/*   Updated: 2020/11/11 05:02:20 by marrow           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,3 @@ void	adding_edges(t_lemin *lem, char *line)
 	add_edge(lem, str[0], str[1]);
 	free_arr(str);
 }
-

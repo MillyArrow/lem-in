@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   search.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlintill <rlintill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marrow <marrow@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 12:45:23 by rlintill          #+#    #+#             */
-/*   Updated: 2020/10/30 13:37:24 by rlintill         ###   ########.fr       */
+/*   Updated: 2020/11/11 04:56:23 by marrow           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
 /*
-** We search the graph whether there was a room with the same coordinates or name.
+** We search the graph whether there was a room with
+** the same coordinates or name.
 */
 
 int	search_same(t_lemin *lem, int x, int y, char *name)
@@ -55,4 +56,3 @@ int	search_names(t_lemin *lem, char *one, char *two)
 	}
 	return (i);
 }
-

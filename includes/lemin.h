@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlintill <rlintill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marrow <marrow@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:23 by rlintill          #+#    #+#             */
-/*   Updated: 2020/10/07 13:37:24 by rlintill         ###   ########.fr       */
+/*   Updated: 2020/11/11 05:11:25 by marrow           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ typedef struct		s_room
 	short			visited;
 	int				x;
 	int				y;
-	int 			ant;
+	int				ant;
 	struct s_path	*path;
-	struct s_edge  	*edge_next;
+	struct s_edge	*edge_next;
 	struct s_edge	*edge_prev;
 	struct s_room	*room_next;
 }					t_room;
@@ -59,8 +59,8 @@ typedef struct		s_path
 typedef struct		s_lemin
 {
 	int				ants;
-	int 			curr_ant;
-	int 			ants_on_road;
+	int				curr_ant;
+	int				ants_on_road;
 	int				rooms;
 	t_room			*start;
 	t_room			*end;
@@ -154,11 +154,10 @@ void				print_path(t_lemin *lem);
 void				print_graph(t_room *graph);
 
 /*
- * BFS
- */
+** BFS
+*/
 
-void					bfs(t_lemin *lem_in);
-
-void					bhandari(t_lemin *le_min);
-void					solver(t_lemin *le_min);
+void				bfs(t_lemin *lem_in);
+void				bhandari(t_lemin *le_min);
+void				solver(t_lemin *le_min);
 #endif

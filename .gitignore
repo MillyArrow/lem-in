@@ -4,4 +4,4 @@ cmake-build-debug/
 objects/
 libft/objects
 libft/libft.a
-test
+tests/test

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   edge.c                                            :+:      :+:    :+:   */
+/*   edge.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlintill <rlintill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marrow <marrow@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/30 12:45:23 by rlintill          #+#    #+#             */
-/*   Updated: 2020/10/30 13:37:24 by rlintill         ###   ########.fr       */
+/*   Created: 2020/11/11 05:01:01 by marrow            #+#    #+#             */
+/*   Updated: 2020/11/11 05:01:48 by marrow           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Adding new edges to the certian rooms.
 */
 
-void	add_edges_next(t_room *out, t_room *to, t_edge *edge)
+void			add_edges_next(t_room *out, t_room *to, t_edge *edge)
 {
 	if (edge != NULL)
 	{
@@ -27,7 +27,7 @@ void	add_edges_next(t_room *out, t_room *to, t_edge *edge)
 	}
 }
 
-void	add_edges_prev(t_room *out, t_room *to, t_edge *edge)
+void			add_edges_prev(t_room *out, t_room *to, t_edge *edge)
 {
 	if (edge != NULL)
 	{
@@ -38,12 +38,12 @@ void	add_edges_prev(t_room *out, t_room *to, t_edge *edge)
 	}
 }
 
-void	add_edges_to_rooms(t_room *one, t_room *two)
+void			add_edges_to_rooms(t_room *one, t_room *two)
 {
-	t_edge	*to_one;
-	t_edge	*to_two;
-	t_edge	*out_one;
-	t_edge	*out_two;
+	t_edge		*to_one;
+	t_edge		*to_two;
+	t_edge		*out_one;
+	t_edge		*out_two;
 
 	if (!(to_one = new_edge(two, one)))
 		return ;
@@ -74,7 +74,7 @@ void	add_edges_to_rooms(t_room *one, t_room *two)
 
 static t_room	*search(t_room *graph, char *name)
 {
-	t_room	*p;
+	t_room		*p;
 
 	p = graph;
 	while (p)
@@ -86,11 +86,11 @@ static t_room	*search(t_room *graph, char *name)
 	return (NULL);
 }
 
-t_edge	*new_edge(t_room *src, t_room *dst)
+t_edge			*new_edge(t_room *src, t_room *dst)
 {
-	t_edge	*new;
+	t_edge		*new;
 
-	if(!(new = (t_edge*)ft_memalloc(sizeof(t_edge))))
+	if (!(new = (t_edge*)ft_memalloc(sizeof(t_edge))))
 		return (NULL);
 	new->weight = 1;
 	new->locked = 0;
@@ -103,9 +103,9 @@ t_edge	*new_edge(t_room *src, t_room *dst)
 	return (new);
 }
 
-int			check_edge(t_room *one, t_room *two)
+int				check_edge(t_room *one, t_room *two)
 {
-	t_edge	*edge;
+	t_edge		*edge;
 
 	edge = one->edge_next;
 	while (edge)
@@ -126,8 +126,8 @@ int			check_edge(t_room *one, t_room *two)
 
 void			add_edge(t_lemin *lem, char *one, char *two)
 {
-	t_room	*one_room;
-	t_room	*two_room;
+	t_room		*one_room;
+	t_room		*two_room;
 
 	one_room = search(lem->graph, one);
 	two_room = search(lem->graph, two);

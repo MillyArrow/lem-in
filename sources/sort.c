@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlintill <rlintill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marrow <marrow@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 12:45:23 by rlintill          #+#    #+#             */
-/*   Updated: 2020/11/05 13:37:24 by rlintill         ###   ########.fr       */
+/*   Updated: 2020/11/11 04:55:44 by marrow           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-t_path 	*sm_dir(t_path *a, t_path *b)
+t_path	*sm_dir(t_path *a, t_path *b)
 {
 	t_path *result;
 
@@ -49,8 +49,8 @@ void	front_back_split_help(t_path **fast, t_path **slow)
 
 void	frontback_split(t_path *src, t_path **front, t_path **back)
 {
-	t_path 	*fast;
-	t_path 	*slow;
+	t_path	*fast;
+	t_path	*slow;
 
 	slow = src;
 	fast = NULL;
@@ -77,5 +77,3 @@ void	merge_sort(t_path **pathes)
 	merge_sort(&b);
 	*pathes = sm_dir(a, b);
 }
-
-

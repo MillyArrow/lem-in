@@ -26,7 +26,7 @@ int			get_num_of_ants(void)
 	ants = get_next_line(0, &line);
 	if (ants < 0 || line[0] == '\0')
 		error_w_del(&line);
-	if (!check_number(line))
+	if (!ft_isint(line))
 		error_w_del(&line);
 	ants = ft_atoi(line);
 	if (ants <= 0)

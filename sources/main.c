@@ -50,7 +50,5 @@ int		main(int argc, char **argv)
 	solver(lem);
 //	print_graph(lem->graph);
 	free_lemin(&lem);
-	while(1)
-	{}
 	return (0);
 }

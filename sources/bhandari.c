@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bhandari.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marrow <marrow@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/11 05:05:08 by marrow            #+#    #+#             */
+/*   Updated: 2020/11/11 05:09:40 by marrow           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lemin.h"
 
 void		lock_path(t_room *out, t_room *to)
 {
-	t_edge *edge;
+	t_edge	*edge;
 
 	edge = out->edge_next;
-	while(edge)
+	while (edge)
 	{
 		if (edge->to == to)
 		{
@@ -31,46 +43,49 @@ void		initialize_before(t_lemin *lem)
 	lem->end->path->length = 0;
 }
 
-
 void		lock_all_pathes(t_edge *edge)
 {
 	while (edge)
 	{
 		edge->weight = -1;
-		lock_path(edge->out, edge->to); // out to
+		lock_path(edge->out, edge->to);
 		edge = edge->out->path->edge;
-	}	
+	}
 }
 
-void delete_links(t_lemin *lem)
+void		delete_links(t_lemin *lem)
 {
-	t_path *pointer;
-	t_path *path;
-	t_path *temp_path;
-	t_path *temp;
+	t_path	*pointer;
+	t_path	*path;
+	t_path	*temp_path;
+	t_path	*temp;
 
-	path = 	lem->start->path->next_path_in_room;
+	path = lem->start->path->next_path_in_room;
 	while (path)
 	{
 		pointer = path->path_next;
 		while (pointer->belongs_to != lem->end)
 		{
 			temp = NULL;
-			if (pointer->edge->locked == 1 && pointer->edge->oppos_edge->locked == 1)
+			if (pointer->edge->locked == 1 && \
+			pointer->edge->oppos_edge->locked == 1)
 			{
-				ft_printf("DELETE LINKS\n");
 				temp = pointer->path_next;
-				temp_path = pointer->edge->oppos_edge->belongs_to_path->path_next;
+				temp_path = pointer->edge->oppos_edge->\
+				belongs_to_path->path_next;
 				pointer->edge->locked = 0;
 				pointer->edge->same_edge->locked = 0;
-
 				pointer->path_prev->path_next = temp_path;
-				pointer->path_prev->edge->same_edge->belongs_to_path->path_next = temp_path;
-				pointer->edge->oppos_edge->belongs_to_path->path_next->path_prev = pointer->path_prev;
-
-				pointer->edge->oppos_edge->belongs_to_path->path_prev->path_next = temp;
-				pointer->edge->oppos_edge->same_edge->belongs_to_path->path_prev->path_next = temp;
-				temp->path_prev = pointer->edge->oppos_edge->belongs_to_path->path_prev;
+				pointer->path_prev->edge->same_edge->belongs_to_path->\
+				path_next = temp_path;
+				pointer->edge->oppos_edge->belongs_to_path->path_next->\
+				path_prev = pointer->path_prev;
+				pointer->edge->oppos_edge->belongs_to_path->path_prev->\
+				path_next = temp;
+				pointer->edge->oppos_edge->same_edge->belongs_to_path->\
+				path_prev->path_next = temp;
+				temp->path_prev = pointer->edge->oppos_edge->belongs_to_path->\
+				path_prev;
 			}
 			if (temp != NULL)
 				pointer = temp;
@@ -81,9 +96,9 @@ void delete_links(t_lemin *lem)
 	}
 }
 
-int count_length(t_path *path)
+int			count_length(t_path *path)
 {
-	int 	count;
+	int		count;
 	t_path	*p;
 
 	count = 1;
@@ -98,9 +113,9 @@ int count_length(t_path *path)
 	return (count);
 }
 
-void recount(t_path *paths)
+void		recount(t_path *paths)
 {
-	t_path *path;
+	t_path	*path;
 
 	path = paths->next_path_in_room;
 	while (path)
@@ -123,9 +138,9 @@ void		bhandari(t_lemin *le_min)
 		initialize_before(le_min);
 		bfs(le_min);
 	}
-	print_path(le_min); // to delete
+	//print_path(le_min); // to delete
 	delete_links(le_min);
 	recount(le_min->start->path);
 	merge_sort(&(le_min->start->path->next_path_in_room));
-	print_path(le_min); // to delete
+	//print_path(le_min); // to delete
 }
