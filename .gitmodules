@@ -3,4 +3,4 @@
 	url = https://github.com/MillyArrow/libft.git
 [submodule "42_lem-in_tools"]
 	path = 42_lem-in_tools
-	url = https://github.com/apft/42_lem-in_tools
+	url = https://github.com/apft/42_lem-in_tools.git
