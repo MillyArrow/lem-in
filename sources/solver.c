@@ -72,7 +72,7 @@ void			solver(t_lemin *le_min)
 
 	if (!(free_rooms = malloc_queue()))
 		error("struct for queue not initialized", le_min);
-	count = -1;
+	count = 0;
 	bhandari(le_min);
 	if (le_min->bonus_print_count_paths)
 		ft_printf("{yellow}Count of paths: %d{eoc}\n", \
