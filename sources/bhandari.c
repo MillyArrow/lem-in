@@ -104,11 +104,11 @@ void				bhandari(t_lemin *le_min)
 		print_path(le_min);
 	}
 	delete_links(le_min);
+	recount(le_min->start->path);
 	if (le_min->bonus_print_path)
 	{
 		ft_printf("{yellow}Path after deleting links{eoc}\n");
 		print_path(le_min);
 	}
-	recount(le_min->start->path);
 	merge_sort(&(le_min->start->path->next_path_in_room));
 }

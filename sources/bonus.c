@@ -86,6 +86,8 @@ void			bonus(char **argv, t_lemin *le_min)
 			le_min->bonus_print_count_paths = true;
 		if (ft_strchr(argv[1], 'r'))
 			le_min->bonus_print_room_count = true;
+		if (ft_strchr(argv[1], 'l'))
+			le_min->bonus_print_line_count = true;
 	}
 	else
 		bonus_help();

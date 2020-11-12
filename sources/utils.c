@@ -59,7 +59,7 @@ int			count_paths(t_path *path)
 {
 	int count;
 
-	count = 1;
+	count = 0;
 	while (path)
 	{
 		++count;

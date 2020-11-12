@@ -71,6 +71,7 @@ typedef struct		s_lemin
 	bool			bonus_print_count_paths;
 	bool			bonus_print_room_count;
 	bool			bonus_print_count_ants;
+	bool			bonus_print_line_count;
 }					t_lemin;
 
 /*

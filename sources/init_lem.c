@@ -31,5 +31,6 @@ t_lemin	*init_lem(void)
 	lem->bonus_print_count_paths = false;
 	lem->bonus_print_room_count = false;
 	lem->bonus_print_count_ants = false;
+	lem->bonus_print_line_count = false;
 	return (lem);
 }

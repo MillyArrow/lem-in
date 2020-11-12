@@ -49,7 +49,7 @@ static	void	move_for_start(t_lemin *le_min, t_path *path)
 	ft_printf("L%d-%s ", curr_ant, room_name);
 }
 
-static void		move_ant_from_start(t_lemin *le_min, t_queue *free_rooms)
+static void		move_ant_from_start(t_lemin *le_min)
 {
 	t_path		*paths;
 	int			ants;
@@ -58,12 +58,9 @@ static void		move_ant_from_start(t_lemin *le_min, t_queue *free_rooms)
 	while (paths && le_min->ants)
 	{
 		ants = le_min->ants;
-		if (best_way(ants, paths, le_min->start->path->next_path_in_room)
-					&& !paths->edge->out->occupied)
-		{
-			queue_add_end(free_rooms, paths->edge->out);
+		if (best_way(ants, paths, le_min->start->path->next_path_in_room) \
+		&& !paths->edge->out->occupied)
 			move_for_start(le_min, paths);
-		}
 		paths = paths->next_path_in_room;
 	}
 }
@@ -71,23 +68,24 @@ static void		move_ant_from_start(t_lemin *le_min, t_queue *free_rooms)
 void			solver(t_lemin *le_min)
 {
 	t_queue		*free_rooms;
-	int			first;
+	int			count;
 
 	if (!(free_rooms = malloc_queue()))
 		error("struct for queue not initialized", le_min);
-	first = 0;
+	count = 0;
 	bhandari(le_min);
 	if (le_min->bonus_print_count_paths)
 		ft_printf("{yellow}Count of paths: %d{eoc}\n", \
 		count_paths(le_min->start->path));
-	move_ant_from_start(le_min, free_rooms);
 	while (le_min->ants_on_road > 0 || le_min->ants > 0)
 	{
-		if (first && le_min->ants_on_road)
+		if (le_min->ants_on_road)
 			move_ant_on_road(le_min);
-		move_ant_from_start(le_min, free_rooms);
+		move_ant_from_start(le_min);
 		ft_printf("\n");
-		first = 1;
+		++count;
 	}
+	if (le_min->bonus_print_line_count)
+		ft_printf("{black}LINE COUNT: %d{eoc} \n", count);
 	free_queue(&free_rooms);
 }
