@@ -60,6 +60,7 @@ int			count_paths(t_path *path)
 	int count;
 
 	count = 0;
+	path = path->next_path_in_room;
 	while (path)
 	{
 		++count;
