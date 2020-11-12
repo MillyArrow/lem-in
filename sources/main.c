@@ -16,10 +16,14 @@ int		main(int argc, char **argv)
 {
 	t_lemin	*lem;
 
-	lem = parse_lem();
+	if (!(lem = init_lem()))
+		exit(0);
+	if (argc > 1)
+		bonus(argv, lem);
+	parse_lem(lem);
 	bfs(lem);
 	if (!(lem->end->visited))
-		error();
+		error("{red}path to end not exist{eoc}\n", lem);
 	solver(lem);
 	free_lemin(&lem);
 	return (0);

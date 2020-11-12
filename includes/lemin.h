@@ -6,7 +6,7 @@
 /*   By: marrow <marrow@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:23 by rlintill          #+#    #+#             */
-/*   Updated: 2020/11/11 05:11:25 by marrow           ###   ########.fr       */
+/*   Updated: 2020/11/12 09:58:26 by marrow           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,19 @@ typedef struct		s_lemin
 	t_room			*start;
 	t_room			*end;
 	t_room			*graph;
+	bool			bonus_print_path;
+	bool			bonus_print_graph;
+	bool			bonus_print_errors;
+	bool			bonus_print_count_paths;
+	bool			bonus_print_room_count;
+	bool			bonus_print_count_ants;
 }					t_lemin;
 
-t_lemin				*parse_lem(void);
+/*
+** Parser.
+*/
+
+t_lemin				*parse_lem(t_lemin *lem);
 
 /*
 ** room.c
@@ -105,8 +115,8 @@ void				move_ant_on_road(t_lemin *le_min);
 ** error.c
 */
 
-void				error(void);
-void				error_w_del(char **line);
+void				error(char *err, t_lemin *lem);
+void				error_w_del(char **line, char *err, t_lemin *lem);
 
 /*
 ** sort.c
@@ -118,14 +128,13 @@ void				merge_sort(t_path **pathes);
 ** free.c
 */
 
-void				free_arr(char **str);
 void				free_lemin(t_lemin **lem);
 
 /*
 ** checking_rooms.c
 */
 
-int					check_line(char **line);
+int					check_line(char **line, t_lemin *lem);
 void				check_input(t_lemin *lem, char **str);
 void				add_rooom(t_lemin *lem, int check, char *line);
 
@@ -158,19 +167,32 @@ t_path				*init_path(t_room *room);
 void				add_path_room(t_room *room, t_path *new);
 void				add_path_edge(t_edge *edge, t_path *new);
 void				search_path(t_lemin *lem);
-void				print_path(t_lemin *lem);
-
-/*
-** To del
-*/
-
-void				print_graph(t_room *graph);
+int					count_paths(t_path *path);
 
 /*
 ** BFS
 */
 
 void				bfs(t_lemin *lem_in);
+
+/*
+** Algorithm Bhandari
+** http://www.macfreek.nl/memory/Disjoint_Path_Finding
+*/
 void				bhandari(t_lemin *le_min);
+
+/*
+** Solver, main functions here.
+*/
+
 void				solver(t_lemin *le_min);
+
+/*
+** Bonus fucntions.
+*/
+
+void				bonus(char **argv, t_lemin *le_min);
+void				print_path(t_lemin *lem);
+void				print_graph(t_room *graph);
+
 #endif

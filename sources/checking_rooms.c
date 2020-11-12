@@ -20,7 +20,7 @@
 ** but not start/end) - error.
 */
 
-int		check_line(char **line)
+int		check_line(char **line, t_lemin *lem)
 {
 	int		res;
 	char	*new_line;
@@ -28,7 +28,7 @@ int		check_line(char **line)
 	while ((res = get_next_line(0, &new_line)))
 	{
 		if (res < 0 || new_line[0] == '\0')
-			error_w_del(&new_line);
+			error_w_del(&new_line, "wrong line", lem);
 		if (new_line[0] != '#' || !ft_strcmp("##end", new_line)
 					|| !ft_strcmp("##start", new_line))
 		{
@@ -58,11 +58,11 @@ void	check_input(t_lemin *lem, char **str)
 	x_str = str[1];
 	y_str = str[2];
 	if (!check_number(x_str) || !check_number(y_str))
-		error();
+		error("wrong coordinates", lem);
 	x = ft_atoi(x_str);
 	y = ft_atoi(y_str);
 	if (search_same(lem, x, y, str[0]))
-		error();
+		error("misnames of rooms", lem);
 }
 
 /*
@@ -79,20 +79,20 @@ void	add_rooom(t_lemin *lem, int check, char *line)
 	t_room	*room;
 
 	if (check == 1 && lem->start != NULL)
-		error();
+		error("start do not exist", lem);
 	if (check == 2 && lem->end != NULL)
-		error();
+		error("end do not exist", lem);
 	new_line = line;
 	len = ft_strlen(new_line);
 	if (*new_line == ' ' || new_line[len - 1] == ' ')
-		error();
+		error("spaces on line", lem);
 	str = ft_strsplit(new_line, ' ');
 	if (str == NULL || str[0] == NULL || str[0][0] == 'L')
-		error();
+		error("wrong room", lem);
 	if (!str[1] || !str[2] || str[3] || str[0][0] == '#')
-		error();
+		error("wrong room", lem);
 	check_input(lem, str);
 	room = new_room(ft_strdup(str[0]), str[1], str[2]);
 	add_new_room(lem, room, check);
-	free_arr(str);
+	ft_arrdel((void ***)&str);
 }

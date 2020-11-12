@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-t_path	*sm_dir(t_path *a, t_path *b)
+static t_path	*sm_dir(t_path *a, t_path *b)
 {
 	t_path *result;
 
@@ -34,7 +34,7 @@ t_path	*sm_dir(t_path *a, t_path *b)
 	return (result);
 }
 
-void	front_back_split_help(t_path **fast, t_path **slow)
+static void		front_back_split_help(t_path **fast, t_path **slow)
 {
 	while (*fast != NULL)
 	{
@@ -47,7 +47,7 @@ void	front_back_split_help(t_path **fast, t_path **slow)
 	}
 }
 
-void	frontback_split(t_path *src, t_path **front, t_path **back)
+static void		frontback_split(t_path *src, t_path **front, t_path **back)
 {
 	t_path	*fast;
 	t_path	*slow;
@@ -61,7 +61,7 @@ void	frontback_split(t_path *src, t_path **front, t_path **back)
 	slow->next_path_in_room = NULL;
 }
 
-void	merge_sort(t_path **pathes)
+void			merge_sort(t_path **pathes)
 {
 	t_path	*head;
 	t_path	*a;

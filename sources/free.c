@@ -12,20 +12,7 @@
 
 #include "lemin.h"
 
-void	free_arr(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-
-void	free_edge(t_edge **edge)
+static void	free_edge(t_edge **edge)
 {
 	(*edge)->to = NULL;
 	(*edge)->out = NULL;
@@ -37,7 +24,7 @@ void	free_edge(t_edge **edge)
 	ft_memdel((void **)&(*edge));
 }
 
-void	free_path(t_path **path)
+static void	free_path(t_path **path)
 {
 	(*path)->edge = NULL;
 	(*path)->belongs_to = NULL;
@@ -47,7 +34,7 @@ void	free_path(t_path **path)
 	ft_memdel((void **)&(*path));
 }
 
-void	free_graph(t_room **graph)
+static void	free_graph(t_room **graph)
 {
 	ft_strdel(&((*graph)->name));
 	if ((*graph)->path)
@@ -62,7 +49,7 @@ void	free_graph(t_room **graph)
 	ft_memdel((void **)&(*graph));
 }
 
-void	free_lemin(t_lemin **lem)
+void		free_lemin(t_lemin **lem)
 {
 	free_graph(&(*lem)->graph);
 	free(*lem);

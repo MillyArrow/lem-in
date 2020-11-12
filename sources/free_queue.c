@@ -12,7 +12,7 @@
 
 #include "queue.h"
 
-void			free_node(t_node **node)
+static void			free_node(t_node **node)
 {
 	(*node)->room = NULL;
 	while ((*node)->next)
@@ -20,7 +20,7 @@ void			free_node(t_node **node)
 	ft_memdel((void**)&(*node));
 }
 
-void			free_queue(t_queue **queue)
+void				free_queue(t_queue **queue)
 {
 	if ((*queue)->head)
 		free_node(&((*queue)->head));

@@ -13,8 +13,7 @@
 NAME = lem-in
 
 CC = gcc
-FLAGS =
-#-Wall -Wextra -Werror -O3
+FLAGS =-Wall -Wextra -Werror -O2
 LIBRARIES = -lft -L $(LIBFT_DIRECTORY)
 INCLUDES = -I $(HEADERS_DIRECTORY) -I $(LIBFT_HEADERS)
 
@@ -35,7 +34,6 @@ SOURCES_LIST = checking_edges.c \
 	bhandari.c \
 	bfs.c \
 	sort.c \
-	print.c \
  	error.c \
 	free.c \
 	free_queue.c \
@@ -49,6 +47,7 @@ SOURCES_LIST = checking_edges.c \
 	room.c \
 	search.c \
 	utils.c \
+	bonus.c \
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 

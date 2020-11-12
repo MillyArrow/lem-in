@@ -6,13 +6,13 @@
 /*   By: marrow <marrow@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 04:51:58 by marrow            #+#    #+#             */
-/*   Updated: 2020/11/11 04:54:52 by marrow           ###   ########.fr       */
+/*   Updated: 2020/11/12 09:59:07 by marrow           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-int				best_way(int ants, t_path *path, t_path *start_path)
+static	int		best_way(int ants, t_path *path, t_path *start_path)
 {
 	int			best_length;
 
@@ -29,7 +29,7 @@ int				best_way(int ants, t_path *path, t_path *start_path)
 		return (FALSE);
 }
 
-void			move_for_start(t_lemin *le_min, t_path *path)
+static	void	move_for_start(t_lemin *le_min, t_path *path)
 {
 	int			curr_ant;
 	char		*room_name;
@@ -49,7 +49,7 @@ void			move_for_start(t_lemin *le_min, t_path *path)
 	ft_printf("L%d-%s ", curr_ant, room_name);
 }
 
-void			move_ant_from_start(t_lemin *le_min, t_queue *free_rooms)
+static void		move_ant_from_start(t_lemin *le_min, t_queue *free_rooms)
 {
 	t_path		*paths;
 	int			ants;
@@ -74,11 +74,14 @@ void			solver(t_lemin *le_min)
 	int			first;
 
 	if (!(free_rooms = malloc_queue()))
-		error();
+		error("struct for queue not initialized", le_min);
 	first = 0;
 	bhandari(le_min);
+	if (le_min->bonus_print_count_paths)
+		ft_printf("{yellow}Count of paths: %d{eoc}\n", \
+		count_paths(le_min->start->path));
 	move_ant_from_start(le_min, free_rooms);
-	while (le_min->ants_on_road > 0)
+	while (le_min->ants_on_road > 0 || le_min->ants > 0)
 	{
 		if (first && le_min->ants_on_road)
 			move_ant_on_road(le_min);

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   bonus.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlintill <rlintill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marrow <marrow@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/05 12:45:23 by rlintill          #+#    #+#             */
-/*   Updated: 2020/11/11 05:00:15 by rlintill         ###   ########.fr       */
+/*   Created: 2020/11/12 09:58:39 by marrow            #+#    #+#             */
+/*   Updated: 2020/11/12 10:00:16 by marrow           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void	print_graph(t_room *graph)
+void			print_graph(t_room *graph)
 {
 	t_room	*p;
 	t_edge	*r;
@@ -34,7 +34,7 @@ void	print_graph(t_room *graph)
 	ft_printf("\n");
 }
 
-void	print_path(t_lemin *lem)
+void			print_path(t_lemin *lem)
 {
 	t_path		*pointer;
 	t_path		*path;
@@ -56,4 +56,37 @@ void	print_path(t_lemin *lem)
 		path = path->next_path_in_room;
 	}
 	ft_printf("\n");
+}
+
+static void		bonus_help(void)
+{
+	ft_printf("Usage: ./lem-in < map_file\nOptions:\n");
+	ft_printf("-e to prints errors\n");
+	ft_printf("-g to prints graph\n");
+	ft_printf("-p to prints paths\n");
+	ft_printf("-c to print count paths\n");
+	ft_printf("-r to print room count\n");
+}
+
+void			bonus(char **argv, t_lemin *le_min)
+{
+	if (!ft_strcmp("--help", argv[1]))
+		bonus_help();
+	else if (argv[1][0] == '-')
+	{
+		if (ft_strchr(argv[1], 'a'))
+			le_min->bonus_print_count_ants = true;
+		if (ft_strchr(argv[1], 'e'))
+			le_min->bonus_print_errors = true;
+		if (ft_strchr(argv[1], 'g'))
+			le_min->bonus_print_graph = true;
+		if (ft_strchr(argv[1], 'p'))
+			le_min->bonus_print_path = true;
+		if (ft_strchr(argv[1], 'c'))
+			le_min->bonus_print_count_paths = true;
+		if (ft_strchr(argv[1], 'r'))
+			le_min->bonus_print_room_count = true;
+	}
+	else
+		bonus_help();
 }

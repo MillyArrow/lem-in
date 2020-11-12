@@ -49,9 +49,9 @@ void	adding_edges(t_lemin *lem, char *line)
 
 	str = ft_strsplit(line, '-');
 	if (str == NULL || str[0] == NULL || str[0][0] == 'L' || !str[1])
-		error_w_del(&line);
+		error_w_del(&line, "wrong line", lem);
 	if (search_names(lem, str[0], str[1]) != 2)
-		error_w_del(&line);
+		error_w_del(&line, "misnames of rooms in links", lem);
 	add_edge(lem, str[0], str[1]);
-	free_arr(str);
+	ft_arrdel((void ***)&str);
 }

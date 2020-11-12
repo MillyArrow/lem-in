@@ -25,5 +25,11 @@ t_lemin	*init_lem(void)
 	lem->start = NULL;
 	lem->end = NULL;
 	lem->graph = NULL;
+	lem->bonus_print_path = false;
+	lem->bonus_print_graph = false;
+	lem->bonus_print_errors = false;
+	lem->bonus_print_count_paths = false;
+	lem->bonus_print_room_count = false;
+	lem->bonus_print_count_ants = false;
 	return (lem);
 }

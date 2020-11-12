@@ -16,7 +16,7 @@
 ** Adding new edges to the certian rooms.
 */
 
-void			add_edges_next(t_room *out, t_room *to, t_edge *edge)
+static void			add_edges_next(t_room *out, t_room *to, t_edge *edge)
 {
 	if (edge != NULL)
 	{
@@ -27,7 +27,7 @@ void			add_edges_next(t_room *out, t_room *to, t_edge *edge)
 	}
 }
 
-void			add_edges_prev(t_room *out, t_room *to, t_edge *edge)
+static void			add_edges_prev(t_room *out, t_room *to, t_edge *edge)
 {
 	if (edge != NULL)
 	{
@@ -38,7 +38,7 @@ void			add_edges_prev(t_room *out, t_room *to, t_edge *edge)
 	}
 }
 
-void			add_edges_to_rooms(t_room *one, t_room *two)
+void				add_edges_to_rooms(t_room *one, t_room *two)
 {
 	t_edge		*to_one;
 	t_edge		*to_two;
@@ -67,7 +67,7 @@ void			add_edges_to_rooms(t_room *one, t_room *two)
 	add_edges_prev(one, two, out_one);
 }
 
-t_edge			*new_edge(t_room *src, t_room *dst)
+t_edge				*new_edge(t_room *src, t_room *dst)
 {
 	t_edge		*new;
 

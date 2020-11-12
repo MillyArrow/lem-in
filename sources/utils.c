@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlintill <rlintill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marrow <marrow@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 12:45:23 by rlintill          #+#    #+#             */
-/*   Updated: 2020/10/30 13:37:24 by rlintill         ###   ########.fr       */
+/*   Updated: 2020/11/12 09:59:52 by marrow           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ void		recount(t_path *paths)
 		path->length = count_length(path);
 		path = path->next_path_in_room;
 	}
+}
+
+int			count_paths(t_path *path)
+{
+	int count;
+
+	count = 1;
+	while (path)
+	{
+		++count;
+		path = path->next_path_in_room;
+	}
+	return (count);
 }

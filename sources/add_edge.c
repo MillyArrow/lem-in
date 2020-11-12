@@ -17,7 +17,7 @@
 ** with ~name~ in the graph.
 */
 
-static t_room	*search(t_room *graph, char *name)
+static t_room		*search(t_room *graph, char *name)
 {
 	t_room		*p;
 
@@ -31,7 +31,7 @@ static t_room	*search(t_room *graph, char *name)
 	return (NULL);
 }
 
-int				check_edge(t_room *one, t_room *two)
+static int			check_edge(t_room *one, t_room *two)
 {
 	t_edge		*edge;
 
@@ -52,7 +52,7 @@ int				check_edge(t_room *one, t_room *two)
 ** of the rooms the src point to. The same we do in the another direction.
 */
 
-void			add_edge(t_lemin *lem, char *one, char *two)
+void				add_edge(t_lemin *lem, char *one, char *two)
 {
 	t_room		*one_room;
 	t_room		*two_room;

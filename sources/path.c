@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-void			search_path_help(t_room *room, int *changed)
+static void			search_path_help(t_room *room, int *changed)
 {
 	t_edge		*edge;
 
@@ -34,7 +34,7 @@ void			search_path_help(t_room *room, int *changed)
 	}
 }
 
-void			search_path(t_lemin *lem)
+void				search_path(t_lemin *lem)
 {
 	t_room		*room;
 	int			i;
@@ -65,19 +65,19 @@ void			search_path(t_lemin *lem)
 ** length = infinity = max_int - 1;
 */
 
-void			add_path_room(t_room *room, t_path *new)
+void				add_path_room(t_room *room, t_path *new)
 {
 	new->next_path_in_room = room->path;
 	room->path = new;
 }
 
-void			add_path_edge(t_edge *edge, t_path *new)
+void				add_path_edge(t_edge *edge, t_path *new)
 {
 	new->next_path_in_edge = edge->belongs_to_path;
 	edge->belongs_to_path = new;
 }
 
-t_path			*init_path(t_room *room)
+t_path				*init_path(t_room *room)
 {
 	t_path		*path;
 

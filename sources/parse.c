@@ -16,21 +16,20 @@
 ** In the first line we are getting the number of the ants.
 */
 
-int			get_num_of_ants(void)
+static int			get_num_of_ants(t_lemin *lem)
 {
 	char	*line;
 	int		ants;
-	int		i;
 
-	i = 0;
+	line = NULL;
 	ants = get_next_line(0, &line);
-	if (ants < 0 || line[0] == '\0')
-		error_w_del(&line);
+	if (ants < 0 || line[0] == '\0' || line == NULL)
+		error_w_del(&line, "misplaced number of ants or line", lem);
 	if (!ft_isint(line))
-		error_w_del(&line);
+		error_w_del(&line, "misplaced number of ants", lem);
 	ants = ft_atoi(line);
 	if (ants <= 0)
-		error_w_del(&line);
+		error_w_del(&line, "misplaced number of ants", lem);
 	ft_putstr(line);
 	ft_putchar('\n');
 	ft_strdel(&line);
@@ -41,16 +40,16 @@ int			get_num_of_ants(void)
 ** Checks if there is the start and the end room.
 */
 
-void		is_start_end(t_lemin *lem, char **line)
+static void			is_start_end(t_lemin *lem, char **line)
 {
 	if (lem->start == NULL || lem->end == NULL)
 	{
 		ft_strdel(line);
-		error();
+		error("wrong start or end", lem);
 	}
 }
 
-void		fill_graph_continue(t_lemin *lem, char **line)
+static void			fill_graph_continue(t_lemin *lem, char **line)
 {
 	while (check_edge_line(line) && *line != NULL)
 	{
@@ -64,13 +63,13 @@ void		fill_graph_continue(t_lemin *lem, char **line)
 ** second one is for connection information.
 */
 
-void		fill_graph(t_lemin *lem)
+static void			fill_graph(t_lemin *lem)
 {
 	char	*line;
 	int		check;
 
 	check = 0;
-	while (check_line(&line) && line != NULL)
+	while (check_line(&line, lem) && line != NULL)
 	{
 		if (ft_strchr(line, '-') != NULL)
 			break ;
@@ -91,16 +90,22 @@ void		fill_graph(t_lemin *lem)
 	fill_graph_continue(lem, &line);
 }
 
-t_lemin		*parse_lem(void)
+t_lemin				*parse_lem(t_lemin *lem)
 {
 	int		ants_num;
-	t_lemin	*lem;
 
-	ants_num = get_num_of_ants();
-	if (!(lem = init_lem()))
-		error();
+	ants_num = get_num_of_ants(lem);
 	lem->ants = ants_num;
 	fill_graph(lem);
 	ft_putchar('\n');
+	if (lem->bonus_print_count_ants)
+		ft_printf("{black}NUMBER OF ANTS: %d{eoc}\n", lem->ants);
+	if (lem->bonus_print_room_count)
+		ft_printf("{black}NUMBER OF ROOMS: %d{eoc}\n", lem->rooms);
+	if (lem->bonus_print_graph)
+	{
+		ft_printf("{cyan}GRAPH:{eoc}\n");
+		print_graph(lem->graph);
+	}
 	return (lem);
 }

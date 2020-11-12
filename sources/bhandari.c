@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-void		initialize_before(t_lemin *lem)
+static void			initialize_before(t_lemin *lem)
 {
 	t_room	*room;
 
@@ -26,7 +26,7 @@ void		initialize_before(t_lemin *lem)
 	lem->end->path->length = 0;
 }
 
-void		lock_all_pathes(t_edge *edge)
+static void			lock_all_pathes(t_edge *edge)
 {
 	t_edge	*ed;
 
@@ -49,7 +49,7 @@ void		lock_all_pathes(t_edge *edge)
 	}
 }
 
-t_path		*switch_links(t_path *pointer, t_path *pointer_prev)
+static t_path		*switch_links(t_path *pointer, t_path *pointer_prev)
 {
 	t_path	*two;
 
@@ -59,7 +59,7 @@ t_path		*switch_links(t_path *pointer, t_path *pointer_prev)
 	return (two);
 }
 
-void		delete_links(t_lemin *lem)
+static void			delete_links(t_lemin *lem)
 {
 	t_path	*pointer;
 	t_path	*path;
@@ -85,7 +85,7 @@ void		delete_links(t_lemin *lem)
 	}
 }
 
-void		bhandari(t_lemin *le_min)
+void				bhandari(t_lemin *le_min)
 {
 	search_path(le_min);
 	lock_all_pathes(le_min->start->path->edge);
@@ -98,7 +98,17 @@ void		bhandari(t_lemin *le_min)
 		initialize_before(le_min);
 		bfs(le_min);
 	}
+	if (le_min->bonus_print_path)
+	{
+		ft_printf("{yellow}Path to remove links{eoc}\n");
+		print_path(le_min);
+	}
 	delete_links(le_min);
+	if (le_min->bonus_print_path)
+	{
+		ft_printf("{yellow}Path after deleting links{eoc}\n");
+		print_path(le_min);
+	}
 	recount(le_min->start->path);
 	merge_sort(&(le_min->start->path->next_path_in_room));
 }
