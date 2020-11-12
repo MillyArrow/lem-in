@@ -33,6 +33,9 @@ static void			lock_all_pathes(t_edge *edge)
 	while (edge)
 	{
 		edge->weight = -1;
+		edge->same_edge->weight = -1;
+		edge->oppos_edge->weight = -1;
+		edge->oppos_edge->same_edge->weight = -1;
 		ed = edge->out->edge_next;
 		while (ed)
 		{
@@ -40,7 +43,6 @@ static void			lock_all_pathes(t_edge *edge)
 			{
 				ed->locked = 1;
 				ed->same_edge->locked = 1;
-				ed->to->locked = 1;
 				break ;
 			}
 			ed = ed->edge_next;
