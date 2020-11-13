@@ -45,6 +45,7 @@ int		check_line(char **line, t_lemin *lem)
 		}
 		else
 			ft_strdel(&new_line);
+		}
 	}
 	return (res);
 }

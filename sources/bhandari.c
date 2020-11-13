@@ -41,7 +41,7 @@ static void			lock_all_pathes(t_path *path, t_room *end)
 		p->edge->locked = 1;
 		p->edge->same_edge->locked = 1;
 		if (p->edge->out != end)
-			p->edge->out->locked = 1; //
+			++p->edge->out->is_used;
 		p = p->path_next;
 	}
 }

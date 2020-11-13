@@ -27,6 +27,7 @@ t_room	*new_room(char *name, char *x, char *y)
 	room->disjoint = FALSE;
 	room->occupied = FALSE;
 	room->visited = 0;
+	room->is_used = 0;
 	room->x = ft_atoi(x);
 	room->y = ft_atoi(y);
 	room->path = init_path(room);

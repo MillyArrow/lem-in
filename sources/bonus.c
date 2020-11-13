@@ -94,5 +94,9 @@ void			bonus(char **argv, t_lemin *le_min)
 			le_min->bonus_print_line_count = true;
 	}
 	else
+	{
 		bonus_help();
+		free_lemin(&le_min);
+		exit(0);
+	}
 }

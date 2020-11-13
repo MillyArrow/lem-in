@@ -23,7 +23,7 @@ typedef struct		s_room
 {
 	bool			locked;
 	bool			occupied;
-	bool			disjoint;
+	int 			is_used;
 	char			*name;
 	short			visited;
 	int				x;
@@ -196,5 +196,5 @@ void				solver(t_lemin *le_min);
 void				bonus(char **argv, t_lemin *le_min);
 void				print_path(t_lemin *lem);
 void				print_graph(t_room *graph);
-
+void				find_solution(t_path *path,t_lemin *lemin);
 #endif
