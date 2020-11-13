@@ -67,11 +67,8 @@ static void		move_ant_from_start(t_lemin *le_min)
 
 void			solver(t_lemin *le_min)
 {
-	t_queue		*free_rooms;
 	int			count;
 
-	if (!(free_rooms = malloc_queue()))
-		error("struct for queue not initialized", le_min);
 	count = 0;
 	bhandari(le_min);
 	if (le_min->bonus_print_count_paths)
@@ -87,5 +84,4 @@ void			solver(t_lemin *le_min)
 	}
 	if (le_min->bonus_print_line_count)
 		ft_printf("{black}LINE COUNT: %d{eoc} \n", count);
-	free_queue(&free_rooms);
 }
