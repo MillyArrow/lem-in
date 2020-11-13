@@ -51,6 +51,7 @@ static void	free_graph(t_room **graph)
 
 void		free_lemin(t_lemin **lem)
 {
-	free_graph(&(*lem)->graph);
+	if ((*lem)->graph)
+		free_graph(&(*lem)->graph);
 	free(*lem);
 }

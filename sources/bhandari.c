@@ -20,34 +20,29 @@ static void			initialize_before(t_lemin *lem)
 	while (room)
 	{
 		room->visited = 0;
+		room->disjoint = 0;
 		add_path_room(room, init_path(room));
 		room = room->room_next;
 	}
 	lem->end->path->length = 0;
 }
 
-static void			lock_all_pathes(t_edge *edge)
+static void			lock_all_pathes(t_path *path, t_room *end)
 {
-	t_edge	*ed;
+	t_path	*p;
 
-	while (edge)
+	p = path;
+	while (p && p->length != 1)
 	{
-		edge->weight = -1;
-		edge->same_edge->weight = -1;
-		edge->oppos_edge->weight = -1;
-		edge->oppos_edge->same_edge->weight = -1;
-		ed = edge->out->edge_next;
-		while (ed)
-		{
-			if (ed->to == edge->to)
-			{
-				ed->locked = 1;
-				ed->same_edge->locked = 1;
-				break ;
-			}
-			ed = ed->edge_next;
-		}
-		edge = edge->out->path->edge;
+		p->edge->weight = -1;
+		p->edge->same_edge->weight = -1;
+		p->edge->oppos_edge->weight = -1;
+		p->edge->oppos_edge->same_edge->weight = -1;
+		p->edge->locked = 1;
+		p->edge->same_edge->locked = 1;
+		if (p->edge->out != end)
+			p->edge->out->locked = 1; //
+		p = p->path_next;
 	}
 }
 
@@ -92,7 +87,7 @@ void				bhandari(t_lemin *le_min)
 	while (le_min->end->visited)
 	{
 		search_path(le_min);
-		lock_all_pathes(le_min->start->path->edge);
+		lock_all_pathes(le_min->start->path, le_min->end);
 		initialize_before(le_min);
 		bfs(le_min);
 	}

@@ -21,8 +21,9 @@
 
 typedef struct		s_room
 {
-	bool			occupied;
 	bool			locked;
+	bool			occupied;
+	bool			disjoint;
 	char			*name;
 	short			visited;
 	int				x;

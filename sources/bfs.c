@@ -21,9 +21,15 @@ static void			adj_list(t_queue *queue)
 	edge_next = room_tmp->edge_prev;
 	while (edge_next)
 	{
-		if (edge_next->out && edge_next->locked == 0 &&
-			edge_next->out->locked == 0)
+		room_tmp = (t_room *)queue->head->room;
+		if (edge_next->locked == 0 &&
+		(room_tmp->locked == 0 || room_tmp->disjoint == 1 ||
+		(room_tmp->locked == 1 && edge_next->oppos_edge->locked == 1
+		&& edge_next->oppos_edge->same_edge->locked == 1)))
 		{
+			if (room_tmp->locked == 1 && edge_next->oppos_edge->locked == 1
+				&& edge_next->oppos_edge->same_edge->locked == 1)
+				edge_next->out->disjoint = 1; // disjoin start ???
 			room_tmp = edge_next->out;
 			if (room_tmp->visited == 0)
 				queue_add_end(queue, room_tmp);

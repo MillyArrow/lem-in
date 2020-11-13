@@ -25,6 +25,12 @@ int		check_edge_line(char **line)
 	{
 		if (new_line[0] == '\0')
 			break ;
+		if (new_line[0] == '#' && new_line[1] == '#')
+		{
+			ft_strdel(&new_line);
+			write(2, "ERROR\n", 6);
+			exit(0);
+		}
 		if (new_line[0] != '#')
 		{
 			*line = new_line;
@@ -33,7 +39,11 @@ int		check_edge_line(char **line)
 			break ;
 		}
 		else
+		{
+			ft_putstr(new_line);
+			ft_putchar('\n');
 			ft_strdel(&new_line);
+		}
 	}
 	return (res);
 }

@@ -24,6 +24,7 @@ t_room	*new_room(char *name, char *x, char *y)
 		return (NULL);
 	room->name = name;
 	room->locked = FALSE;
+	room->disjoint = FALSE;
 	room->occupied = FALSE;
 	room->visited = 0;
 	room->x = ft_atoi(x);
