@@ -58,7 +58,7 @@ static void		move_ant_from_start(t_lemin *le_min)
 	while (paths && le_min->ants)
 	{
 		ants = le_min->ants;
-		if (best_way(ants, paths, le_min->start->path->next_path_in_room) \
+		if (best_way(ants, paths, le_min->start->path->next_path_in_room)
 		&& !paths->edge->out->occupied)
 			move_for_start(le_min, paths);
 		paths = paths->next_path_in_room;

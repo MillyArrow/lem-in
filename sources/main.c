@@ -26,5 +26,6 @@ int		main(int argc, char **argv)
 		error("{red}path to end not exist{eoc}\n", lem);
 	solver(lem);
 	free_lemin(&lem);
+//	while(1){}
 	return (0);
 }
