@@ -71,6 +71,7 @@ void			solver(t_lemin *le_min)
 
 	count = 0;
 	bhandari(le_min);
+	find_solution(le_min->start->path, le_min);
 	if (le_min->bonus_print_count_paths)
 		ft_printf("{yellow}Count of paths: %d{eoc}\n", \
 		count_paths(le_min->start->path));
