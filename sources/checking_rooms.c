@@ -37,8 +37,12 @@ int		check_line(char **line, t_lemin *lem)
 			ft_putchar('\n');
 			break ;
 		}
-		else
+		else if (new_line[0] == '#')
+		{
+			ft_putstr(new_line);
+			ft_putchar('\n');
 			ft_strdel(&new_line);
+		}
 	}
 	return (res);
 }
