@@ -56,6 +56,7 @@ static void			fill_graph_continue(t_lemin *lem, char **line)
 		adding_edges(lem, *line);
 		ft_strdel(line);
 	}
+	ft_strdel(line);
 }
 
 /*
@@ -69,13 +70,13 @@ static void			fill_graph(t_lemin *lem)
 	int		check;
 
 	check = 0;
-	while (check_line(&line, lem) && line != NULL)
+	while (check_line(&line, lem, check) && line != NULL)
 	{
 		if (ft_strchr(line, '-') != NULL)
 			break ;
-		if (ft_strcmp(line, "##start") == 0)
+		if (check == 0 && !ft_strcmp(line, "##start"))
 			check = 1;
-		else if (ft_strcmp(line, "##end") == 0)
+		else if (check == 0 && !ft_strcmp(line, "##end"))
 			check = 2;
 		else
 		{
@@ -84,6 +85,8 @@ static void			fill_graph(t_lemin *lem)
 		}
 		ft_strdel(&line);
 	}
+	if (check != 0)
+		error_w_del(&line, "wrong start or end", lem);
 	is_start_end(lem, &line);
 	adding_edges(lem, line);
 	ft_strdel(&line);

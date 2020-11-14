@@ -21,9 +21,8 @@
 
 typedef struct		s_room
 {
-	bool			locked;
 	bool			occupied;
-	int 			is_used;
+	int				is_used;
 	char			*name;
 	short			visited;
 	int				x;
@@ -136,7 +135,7 @@ void				free_lemin(t_lemin **lem);
 ** checking_rooms.c
 */
 
-int					check_line(char **line, t_lemin *lem);
+int					check_line(char **line, t_lemin *lem, int check);
 void				check_input(t_lemin *lem, char **str);
 void				add_rooom(t_lemin *lem, int check, char *line);
 
@@ -146,6 +145,12 @@ void				add_rooom(t_lemin *lem, int check, char *line);
 
 int					check_edge_line(char **line);
 void				adding_edges(t_lemin *lem, char *line);
+
+/*
+** find_solution.c
+*/
+
+void				find_solution(t_path *path, t_lemin *lemin);
 
 /*
 ** search.c
@@ -196,5 +201,5 @@ void				solver(t_lemin *le_min);
 void				bonus(char **argv, t_lemin *le_min);
 void				print_path(t_lemin *lem);
 void				print_graph(t_room *graph);
-void				find_solution(t_path *path,t_lemin *lemin);
+void				find_solution(t_path *path, t_lemin *lemin);
 #endif

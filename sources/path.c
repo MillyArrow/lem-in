@@ -19,9 +19,7 @@ static void			search_path_help(t_room *room, int *changed)
 	edge = room->edge_prev;
 	while (edge != NULL)
 	{
-		if ((edge->locked == 0 && edge->same_edge->locked == 0 &&
-				(room->locked == edge->out->locked || room->disjoint == 1 ||
-				(room->locked == 0 && edge->out->locked == 1 && edge->out->disjoint == 0))) &&
+		if (edge->locked == 0 && edge->same_edge->locked == 0 &&
 			edge->out->path->length + edge->weight < room->path->length)
 		{
 			room->path->length = edge->out->path->length + edge->weight;

@@ -32,6 +32,7 @@ SOURCES_LIST = checking_edges.c \
 	edge.c \
 	path.c \
 	bhandari.c \
+	find_solution.c \
 	bfs.c \
 	sort.c \
  	error.c \

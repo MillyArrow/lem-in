@@ -12,6 +12,14 @@
 
 #include "lemin.h"
 
+static void	check_line_help(char **new_line, int check, t_lemin *lem)
+{
+	if (check != 0)
+		error_w_del(new_line, "wrong line", lem);
+	else
+		ft_strdel(new_line);
+}
+
 /*
 ** Check whether line is correct. With GNL we read from the input,
 ** if the line is correct we change the pointer to the line and break the cycle.
@@ -20,7 +28,7 @@
 ** but not start/end) - error.
 */
 
-int		check_line(char **line, t_lemin *lem)
+int			check_line(char **line, t_lemin *lem, int check)
 {
 	int		res;
 	char	*new_line;
@@ -37,15 +45,14 @@ int		check_line(char **line, t_lemin *lem)
 			ft_putchar('\n');
 			break ;
 		}
-		else if (new_line[0] == '#')
+		else if (new_line[0] == '#' && check == 0)
 		{
 			ft_putstr(new_line);
 			ft_putchar('\n');
 			ft_strdel(&new_line);
 		}
 		else
-			ft_strdel(&new_line);
-		}
+			check_line_help(&new_line, check, lem);
 	}
 	return (res);
 }
@@ -55,7 +62,7 @@ int		check_line(char **line, t_lemin *lem)
 ** Check wherether there was no room with the same pair of coordinates and name.
 */
 
-void	check_input(t_lemin *lem, char **str)
+void		check_input(t_lemin *lem, char **str)
 {
 	int		x;
 	int		y;
@@ -78,7 +85,7 @@ void	check_input(t_lemin *lem, char **str)
 ** Check the input with check_input(...) and finally adding it.
 */
 
-void	add_rooom(t_lemin *lem, int check, char *line)
+void		add_rooom(t_lemin *lem, int check, char *line)
 {
 	char	**str;
 	char	*new_line;

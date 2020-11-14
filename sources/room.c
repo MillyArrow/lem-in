@@ -23,8 +23,6 @@ t_room	*new_room(char *name, char *x, char *y)
 	if (!(room = (t_room*)ft_memalloc(sizeof(t_room))))
 		return (NULL);
 	room->name = name;
-	room->locked = FALSE;
-	room->disjoint = FALSE;
 	room->occupied = FALSE;
 	room->visited = 0;
 	room->is_used = 0;

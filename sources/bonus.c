@@ -68,14 +68,17 @@ static void		bonus_help(void)
 	ft_printf("-r to print room count\n");
 }
 
+void			bonus_err(t_lemin *le_min)
+{
+	bonus_help();
+	free_lemin(&le_min);
+	exit(0);
+}
+
 void			bonus(char **argv, t_lemin *le_min)
 {
 	if (!ft_strcmp("--help", argv[1]))
-	{
-		bonus_help();
-		free_lemin(&le_min);
-		exit(0);
-	}
+		bonus_err(le_min);
 	else if (argv[1][0] == '-')
 	{
 		if (ft_strchr(argv[1], 'a'))
@@ -94,9 +97,5 @@ void			bonus(char **argv, t_lemin *le_min)
 			le_min->bonus_print_line_count = true;
 	}
 	else
-	{
-		bonus_help();
-		free_lemin(&le_min);
-		exit(0);
-	}
+		bonus_err(le_min);
 }

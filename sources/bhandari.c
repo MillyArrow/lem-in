@@ -20,7 +20,6 @@ static void			initialize_before(t_lemin *lem)
 	while (room)
 	{
 		room->visited = 0;
-		room->disjoint = 0;
 		add_path_room(room, init_path(room));
 		room = room->room_next;
 	}
