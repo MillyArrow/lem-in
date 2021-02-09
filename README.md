@@ -120,8 +120,6 @@ G-K
 в зависимости от количества муравьев в случаях, подобных представленному ниже.
 ###### тут должна быть картинка пример №3 из таски
 
-## Installation
->	Works for Linux and Mac OS.
 
 Run the following commands:
 * download
